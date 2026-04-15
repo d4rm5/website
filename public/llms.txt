@@ -1,0 +1,9 @@
+# d4rm
+
+> Systems engineering student · Argentina. Ethereum, cryptography, security.
+
+## Details
+
+- [Machine-readable profile (Markdown)](/agents.md)
+- [Blog](/blog/)
+- [RSS](/rss.xml)
