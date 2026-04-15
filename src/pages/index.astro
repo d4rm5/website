@@ -1,130 +1,79 @@
 ---
-import '@fontsource-variable/inconsolata';
-
-const socials = [
-  {
-    name: "X",
-    url: "https://x.com/d4rm_",
-  },
-  {
-    name: "Email",
-    url: "mailto:hello@dantesito.com"
-  },
-  {
-    name: "GitHub",
-    url: "https://github.com/d4rm5",
-  },
-  {
-    name: "Telegram",
-    url: "https://t.me/d4rm5",
-  },
-  {
-    name: "My blog",
-    url: "https://paragraph.xyz/@d4rm_",
-  },
-  {
-    name: "Linkedin",
-    url: "https://linkedin.com/in/dantemartinez5"
-  }
-];
-
-const projects = [
-  {
-    name: "Devcontainer Wizard @ The Red Guild",
-    url: "https://github.com/theredguild/devcontainer-wizard",
-    description: "I built a CLI tool to scaffold custom Dev Containers oriented to web3 developers"
-  },
-  {
-    name: "Superswap @ Aleph de Verano 24' Hackathon",
-    url: "https://dorahacks.io/buidl/20852",
-    description:
-      "1st place in SuperChain Financial Innovation track. Superswap simplifies cross-chain token swaps and liquidity provision by centralizing liquidity from multiple chains."
-  },
-  {
-    name: "Proof of X",
-    url: "https://pox.me",
-    description:
-      "Open source web3 protocol focused on internet identity and privacy. I contributed to developing the web3 software and maintaining the community. Worked with Next.js, Tailwind, and front-end smart contracts integrations.",
-  },
-  {
-    name: "Library digital credential",
-    url: "https://x.com/d4rm_/status/1722034025190023404",
-    description:
-      "Open source digital credential software created for my school’s library, built with Expo, React Native, Go, and MySQL. It was my final project for high school.",
-  },
-  {
-    name: "Technical high school catalog",
-    url: "https://github.com/catalogo-inet/catalogo-inet-front",
-    description:
-      "A map and catalog of all the technical secondary schools in Argentina, which won a contest organized by the INET (National Institute of Technological Education), where many schools from the country participated.",
-  },
-];
+import Base from '../layouts/Base.astro';
+import {
+  displayName,
+  hacktandil,
+  org,
+  projects,
+  siteDescription,
+  siteTitle,
+  socials,
+  tagline,
+} from '../data/profile';
 ---
 
-<html lang='en'>
-  <head>
-    <meta charset='utf-8' />
-    <link rel='icon' type='image/x-icon' href='/favicon.ico' />
-    <meta name='viewport' content='width=device-width' />
-    <link
-      rel='stylesheet'
-      href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css'
-      integrity='sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=='
-      crossorigin='anonymous'
-    />
-    <meta name='generator' content={Astro.generator} />
-    <meta name='description' content='Gordo compu full-time. Student of systems engineering. Blockchain, cryptography, distributed systems, cybersecurity and performant software.' />
-    <meta name='author' content='d4rm' />
-    <meta property='og:title' content='dantesito.eth' />
-    <meta property='og:image' content='avatar.png' />
-    <meta property='og:description' content='dantesito.eth' />
-    <meta property='twitter:description' content='Gordo compu full-time. Student of systems engineering at UNICEN. Blockchain, cryptography, distributed systems, cybersecurity and performant software.' />
-    <meta property='twitter:title' content='dantesito.eth' />
-    <meta property='twitter:image' content='avatar.png' />
-    <meta name='twitter:card' content='summary' />
-    <meta name='twitter:site' content='@BremNeville' />
-    <title>dantesito.eth</title>
-    <style>
-      main {
-        font-family: 'Inconsolata Variable', monospace;
-        font-display: swap;
-      }
-    </style>
-  </head>
-  <body class="bg-[#1e1e1e] flex justify-center items-center text-white p-5">
-  <main class="w-full max-w-screen-md mt-1 px-4">
-    <h1 class="text-4xl sm:text-3xl font-bold mb-5 text-center">Hi, Dantesito here! 👋🏻</h1>
-    <p class="text-lg sm:text-base mb-4 text-center">
-      I&#39;m Dante, aka dantesito or d4rm. 🤠 <br />
-      I&#39;m a systems engineering student from Argentina and a passionate enthusiast about blockchain, Ethereum,
-      cryptography, cybersecurity, and computers in general. 🧑‍💻
+<Base
+  title={siteTitle}
+  description={siteDescription}
+  ogTitle={displayName}
+  includeAgentsAlternate
+>
+  <div class='flex min-h-[calc(100vh-4rem)] flex-col justify-center py-8'>
+    <h1 class='mb-3 text-center text-4xl font-bold text-neutral-900 sm:text-3xl dark:text-white'>
+      {displayName}
+    </h1>
+    <p class='mb-2 text-center text-lg text-neutral-600 sm:text-base dark:text-gray-300'>{tagline}</p>
+    <p class='mx-auto mb-8 max-w-lg text-center text-base text-neutral-500 sm:text-sm dark:text-gray-400'>
+      Member of{' '}
+      <a
+        href={org.url}
+        target='_blank'
+        rel='noopener noreferrer'
+        class='text-blue-600 hover:underline dark:text-blue-400'
+      >
+        {org.name}
+      </a>{' '}
+      and co-founder of{' '}
+      <a
+        href={hacktandil.url}
+        target='_blank'
+        rel='noopener noreferrer'
+        class='text-blue-600 hover:underline dark:text-blue-400'
+      >
+        {hacktandil.name}
+      </a>.
     </p>
-    <p class="text-lg sm:text-base mb-8 text-center">
-      I'm currently interning at <a href="https://theredguild.org" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline">The Red Guild</a>, where I’m involved in projects focused on open-source collaboration, cybersecurity, education, and such interesting things! 
-      I also have hands-on experience with TypeScript, React, React Native, and Next.js.
-    </p>
-    <h2 class="text-2xl font-semibold mt-8 mb-4 text-gray-900 dark:text-gray-100 text-center">Find me on:</h2>
-    <ul class="flex flex-wrap justify-center space-x-4 text-lg sm:text-base text-blue-600 dark:text-blue-400">
+    <h2 class='mb-3 mt-6 text-center text-xl font-semibold text-neutral-900 dark:text-gray-100'>Links</h2>
+    <ul class='flex flex-wrap justify-center space-x-4 text-lg text-blue-600 sm:text-base dark:text-blue-400'>
       {socials.map((social) => (
         <li id={social.name}>
-          <a href={social.url} target="_blank" rel="noopener noreferrer" class="hover:underline">
+          <a
+            href={social.url}
+            class='hover:underline'
+            {...(social.url.startsWith('http') || social.url.startsWith('mailto:')
+              ? { target: '_blank', rel: 'noopener noreferrer' }
+              : {})}
+          >
             {social.name}
           </a>
         </li>
       ))}
     </ul>
-    <h2 class="text-2xl font-semibold mt-8 mb-4 text-center">Some of my projects and contributions ↓</h2>
-    <ul class="list-none space-y-4 text-left mb-3">
+    <h2 class='mb-3 mt-10 text-center text-xl font-semibold text-neutral-900 dark:text-white'>Projects</h2>
+    <ul class='mx-auto mb-3 max-w-lg list-none space-y-5 text-left'>
       {projects.map((project) => (
-        <li id={project.name}>
-          <a href={project.url} target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline">
+        <li id={project.name} class='text-sm sm:text-base'>
+          <a
+            href={project.url}
+            target='_blank'
+            rel='noopener noreferrer'
+            class='font-medium text-blue-600 hover:underline dark:text-blue-400'
+          >
             {project.name}
           </a>
-          : {project.description}
+          <span class='text-neutral-600 dark:text-gray-400'> — {project.description}</span>
         </li>
       ))}
     </ul>
-  </main>
-</body>
-
-</html>
+  </div>
+</Base>
