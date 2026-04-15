@@ -5,13 +5,9 @@
   "description": "Personal site and blog (dantesito.com) — Astro, Tailwind, content collections, RSS.",
   "type": "module",
   "scripts": {
-    "sync:agents": "tsx scripts/sync-agents-md.ts",
-    "sync:blog": "node scripts/sync-blog-md.mjs",
     "dev": "astro dev",
-    "predev": "pnpm sync:agents && pnpm sync:blog",
     "start": "astro dev",
     "build": "astro check && astro build",
-    "prebuild": "pnpm sync:agents && pnpm sync:blog",
     "preview": "astro preview",
     "astro": "astro"
   },
@@ -30,7 +26,6 @@
     "@tailwindcss/typography": "^0.5.10",
     "@types/node": "^25.6.0",
     "csv-parse": "^6.2.1",
-    "tsx": "^4.19.2",
     "turndown": "^7.2.4"
   }
 }

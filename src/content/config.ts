@@ -7,6 +7,8 @@ const blog = defineCollection({
     description: z.string(),
     pubDate: z.coerce.date(),
     legacyId: z.string().optional(),
+    /** Absolute URL or site path (e.g. /avatar.png) for Open Graph / X previews */
+    image: z.string().optional(),
   }),
 });
 

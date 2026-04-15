@@ -22,6 +22,9 @@ const agentMarkdownHref = `/blog/${encodeURIComponent(mdFile)}`;
   description={post.data.description}
   ogTitle={post.data.title}
   agentMarkdownHref={agentMarkdownHref}
+  ogType='article'
+  publishedTime={post.data.pubDate}
+  ogImage={post.data.image}
 >
   <nav class='mb-8 text-center text-sm text-neutral-500 dark:text-gray-500'>
     <a href='/' class='hover:text-neutral-800 dark:hover:text-gray-300'>Home</a>

@@ -1,6 +1,11 @@
 ---
 import '@fontsource-variable/inconsolata';
-import { siteDescription as defaultSiteDescription } from '../data/profile';
+import {
+  siteDescription as defaultSiteDescription,
+  siteTitle as defaultSiteTitle,
+  twitterCreator,
+  twitterSite,
+} from '../data/profile';
 
 interface Props {
   title: string;
@@ -9,15 +14,35 @@ interface Props {
   includeAgentsAlternate?: boolean;
   /** Raw Markdown URL for agent switch (e.g. /blog/post.md). Defaults to profile /agents.md. */
   agentMarkdownHref?: string;
+  ogType?: 'website' | 'article';
+  /** Absolute image URL, or path from site root (e.g. /avatar.png). Used for OG + X Cards. */
+  ogImage?: string;
+  /** For `og:type=article` (blog posts). */
+  publishedTime?: Date;
 }
 
 const {
   title,
   description = defaultSiteDescription,
-  ogTitle = 'dantesito.eth',
+  ogTitle = defaultSiteTitle,
   includeAgentsAlternate = false,
   agentMarkdownHref = '/agents.md',
+  ogType = 'website',
+  ogImage: ogImageProp,
+  publishedTime,
 } = Astro.props;
+
+const site = Astro.site ?? new URL('https://dantesito.com');
+const canonicalUrl = new URL(Astro.url.pathname, site).href;
+
+function absoluteImageUrl(image: string): string {
+  if (image.startsWith('http://') || image.startsWith('https://')) return image;
+  const path = image.startsWith('/') ? image : `/${image}`;
+  return new URL(path, site).href;
+}
+
+const ogImageUrl = absoluteImageUrl(ogImageProp ?? '/avatar.png');
+const twitterCard = ogType === 'article' ? 'summary_large_image' : 'summary';
 
 ---
 
@@ -34,6 +59,7 @@ const {
     </script>
     <link rel='icon' type='image/x-icon' href='/favicon.ico' />
     <meta name='viewport' content='width=device-width' />
+    <link rel='canonical' href={canonicalUrl} />
     <link
       rel='stylesheet'
       href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css'
@@ -50,14 +76,26 @@ const {
     <link rel='alternate' type='application/rss+xml' title='Blog' href='/rss.xml' />
     <meta name='description' content={description} />
     <meta name='author' content='d4rm' />
+
+    <meta property='og:site_name' content={defaultSiteTitle} />
     <meta property='og:title' content={ogTitle} />
-    <meta property='og:image' content='avatar.png' />
     <meta property='og:description' content={description} />
-    <meta property='twitter:description' content={description} />
-    <meta property='twitter:title' content={ogTitle} />
-    <meta property='twitter:image' content='avatar.png' />
-    <meta name='twitter:card' content='summary' />
-    <meta name='twitter:site' content='@BremNeville' />
+    <meta property='og:url' content={canonicalUrl} />
+    <meta property='og:type' content={ogType} />
+    <meta property='og:locale' content='en_US' />
+    <meta property='og:image' content={ogImageUrl} />
+    <meta property='og:image:alt' content={ogTitle} />
+    {publishedTime && (
+      <meta property='article:published_time' content={publishedTime.toISOString()} />
+    )}
+
+    <meta name='twitter:card' content={twitterCard} />
+    <meta name='twitter:site' content={twitterSite} />
+    {ogType === 'article' && <meta name='twitter:creator' content={twitterCreator} />}
+    <meta name='twitter:title' content={ogTitle} />
+    <meta name='twitter:description' content={description} />
+    <meta name='twitter:image' content={ogImageUrl} />
+
     <title>{title}</title>
     <style>
       main {

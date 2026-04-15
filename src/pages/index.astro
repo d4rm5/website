@@ -12,7 +12,12 @@ import {
 } from '../data/profile';
 ---
 
-<Base title={siteTitle} description={siteDescription} includeAgentsAlternate>
+<Base
+  title={siteTitle}
+  description={siteDescription}
+  ogTitle={displayName}
+  includeAgentsAlternate
+>
   <div class='flex min-h-[calc(100vh-4rem)] flex-col justify-center py-8'>
     <h1 class='mb-3 text-center text-4xl font-bold text-neutral-900 sm:text-3xl dark:text-white'>
       {displayName}

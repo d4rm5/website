@@ -9,6 +9,11 @@ export const siteTitle = "dantesito.com";
 export const siteDescription =
 	"Member of The Red Guild, co-founder of Hacktandil.";
 
+export const twitterSite = "@d4rm_";
+
+/** X Card: author on blog posts */
+export const twitterCreator = "@d4rm_";
+
 export const org = {
 	name: "The Red Guild",
 	url: "https://theredguild.org",
