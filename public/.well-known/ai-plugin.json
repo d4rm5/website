@@ -1,0 +1,20 @@
+{
+  "schema_version": "v1",
+  "name_for_model": "dantesito_profile",
+  "name_for_human": "dantesito",
+  "description_for_model": "Technical profile of Dante Martinez: systems engineering student, founder of HackTandil, member of The Red Guild. Contains blog posts, project portfolio, and professional information.",
+  "description_for_human": "Dante Martinez's professional profile and blog",
+  "auth": {
+    "type": "none"
+  },
+  "api": {
+    "type": "openapi",
+    "url": "https://dantesito.com/agents.md",
+    "is_user_authenticated": false
+  },
+  "logo_url": "https://dantesito.com/favicon.ico",
+  "contact_email": "contact@dantesito.com",
+  "legal_info_url": "https://dantesito.com",
+  "homepage_url": "https://dantesito.com",
+  "category": "professional_profile"
+}
