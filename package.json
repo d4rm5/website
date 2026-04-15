@@ -1,24 +1,36 @@
 {
-  "name": "linktree",
+  "name": "dantesito-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Personal site and blog (dantesito.com) — Astro, Tailwind, content collections, RSS.",
   "type": "module",
-  "version": "0.0.1",
   "scripts": {
+    "sync:agents": "tsx scripts/sync-agents-md.ts",
+    "sync:blog": "node scripts/sync-blog-md.mjs",
     "dev": "astro dev",
+    "predev": "pnpm sync:agents && pnpm sync:blog",
     "start": "astro dev",
     "build": "astro check && astro build",
+    "prebuild": "pnpm sync:agents && pnpm sync:blog",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
     "@astrojs/check": "^0.5.3",
+    "@astrojs/rss": "^4.0.18",
     "@astrojs/tailwind": "^5.1.0",
     "@fontsource-variable/inconsolata": "^5.1.0",
     "astro": "^4.3.6",
+    "marked": "^18.0.0",
     "prettier-plugin-tailwindcss": "^0.5.11",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.3.3"
   },
   "devDependencies": {
-    "@tailwindcss/typography": "^0.5.10"
+    "@tailwindcss/typography": "^0.5.10",
+    "@types/node": "^25.6.0",
+    "csv-parse": "^6.2.1",
+    "tsx": "^4.19.2",
+    "turndown": "^7.2.4"
   }
 }
