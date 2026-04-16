@@ -7,7 +7,7 @@ export const siteTitle = "dantesito.com";
 
 /** Short line for `<meta name="description">`, Open Graph, and RSS `<description>`. */
 export const siteDescription =
-	"Member of The Red Guild, co-founder of Hacktandil.";
+	"Member of The Red Guild, co-founder of HackTandil.";
 
 export const twitterSite = "@d4rm_";
 
@@ -20,7 +20,7 @@ export const org = {
 } as const;
 
 export const hacktandil = {
-	name: "Hacktandil",
+	name: "HackTandil",
 	url: "https://hacktandil.org",
 } as const;
 
@@ -32,6 +32,107 @@ export const socials = [
 	{ name: "Telegram", url: "https://t.me/d4rm5" },
 	{ name: "LinkedIn", url: "https://linkedin.com/in/dantemartinez5" },
 ] as const;
+
+/** Conference / community events where you've spoken, curated, volunteered, or ran on-site awareness (most recent first in the UI). */
+export type EventRole = "speaker" | "volunteer" | "curator" | "campaign";
+
+export type ProfileEvent = {
+	name: string;
+	/** ISO date (YYYY-MM-DD); used for sorting and display */
+	date: string;
+	location?: string;
+	roles: readonly EventRole[];
+	/** Short context: series, org, or talk title */
+	detail?: string;
+	/** Event URL, slides, recording, or a write-up (e.g. /blog/...) */
+	url?: string;
+};
+
+/** Human-readable labels for the home page (agents.md uses lowercase role names). */
+export function formatEventRoleLabel(role: EventRole): string {
+	switch (role) {
+		case "speaker":
+			return "Speaker";
+		case "volunteer":
+			return "Volunteer";
+		case "curator":
+			return "Content curator";
+		case "campaign":
+			return "Awareness campaign";
+	}
+}
+
+function roleNameForAgentsMd(role: EventRole): string {
+	switch (role) {
+		case "speaker":
+			return "speaker";
+		case "volunteer":
+			return "volunteer";
+		case "curator":
+			return "curator";
+		case "campaign":
+			return "campaign";
+	}
+}
+
+export const events: readonly ProfileEvent[] = [
+	{
+		name: "Devconnect Buenos Aires — A.L.E.R.T.",
+		date: "2025-11-19",
+		location: "Buenos Aires, Argentina",
+		roles: ["campaign"],
+		detail: "On-site security awareness · The Red Guild",
+		url: "https://blog.theredguild.org/against-all-odds-security-awareness-campaign-at-devconnect/",
+	},
+	{
+		name: "Ekoparty",
+		date: "2025-10-23",
+		location: "Buenos Aires, Argentina",
+		roles: ["speaker"],
+		detail: "“Quick intro to some of the threats in Web3”",
+		url: "https://blog.theredguild.org/our-presence-at-the-biggest-security-latin-american-conference-ekoparty/",
+	},
+	{
+		name: "Ethereum Essentials · Nodo Serrano",
+		date: "2025-10-15",
+		location: "Buenos Aires, Argentina",
+		roles: ["speaker"],
+		detail: "“¿Qué es Ethereum?”",
+		url: "https://devconnect.org/destino/ethereum-essentials-volume-1-006Vj00000M6G8gIAF",
+	},
+	{
+		name: "Governance Day",
+		date: "2024-11-11",
+		location: "Bangkok, Thailand",
+		roles: ["volunteer"],
+		detail: "Side event during Devcon SEA week · SEEDGov",
+		url: "/blog/devcon-sea/",
+	},
+	{
+		name: "GEERS Blockchain",
+		date: "2024-09-15",
+		location: "Argentina",
+		roles: ["speaker", "curator"],
+		detail: "Speaker & content curation",
+		url: "http://geers.in/blockchain",
+	},
+];
+
+/** Newest first; safe to call at build time. */
+export function getProfileEventsChronological(): ProfileEvent[] {
+	return [...events].sort(
+		(a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+	);
+}
+
+export function formatProfileEventDate(iso: string): string {
+	const d = new Date(`${iso}T12:00:00`);
+	return d.toLocaleDateString("en", {
+		year: "numeric",
+		month: "short",
+		day: "numeric",
+	});
+}
 
 export const projects = [
 	{
@@ -95,6 +196,26 @@ export function renderAgentsMd(siteUrl = ""): string {
 		"",
 		...projects.map((p) => `- [${p.name}](${p.url}) — ${p.description}`),
 		"",
+		...(events.length
+			? ([
+					"## Talks & volunteering",
+					"",
+					...getProfileEventsChronological().map((e) => {
+						const roleLabels = e.roles
+							.map((r) => roleNameForAgentsMd(r))
+							.join(", ");
+						let linkUrl = e.url;
+						if (linkUrl && base && linkUrl.startsWith("/"))
+							linkUrl = `${base}${linkUrl}`;
+						const title = linkUrl ? `[${e.name}](${linkUrl})` : e.name;
+						const meta = [e.detail, e.location, formatProfileEventDate(e.date)]
+							.filter(Boolean)
+							.join(" · ");
+						return `- ${title} (${roleLabels})${meta ? ` — ${meta}` : ""}`;
+					}),
+					"",
+				] as string[])
+			: []),
 	];
 
 	if (base) {
