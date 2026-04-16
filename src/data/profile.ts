@@ -2,6 +2,20 @@ export const displayName = "dantesito";
 
 export const tagline = "Hacker · Argentina";
 
+/**
+ * Dual AI-friendly approach:
+ *
+ * 1. /llms.txt - Entry point following the llms.txt specification (https://llmstxt.org/)
+ *    Provides a curated overview with clear sections and links to richer content.
+ *
+ * 2. /agents.md - Rich, comprehensive profile with full bio, all projects,
+ *    talks & volunteering. This contains the detailed information that LLMs
+ *    should actually read.
+ *
+ * This follows the llms.txt recommendation: have a concise entry point that
+ * points to the detailed Markdown content.
+ */
+
 /** Browser tab, RSS `<title>`, and other metadata. */
 export const siteTitle = "dantesito.com";
 
@@ -169,6 +183,53 @@ export const projects = [
 		description: "School final project · Expo, Go",
 	},
 ] as const;
+
+/** llms.txt following the https://llmstxt.org/ specification.
+ * This serves as the entry point for LLMs, providing a curated overview
+ * with links to richer content like agents.md. */
+export function renderLlmsTxt(siteUrl = ""): string {
+	const base = siteUrl.replace(/\/$/, "");
+	const home = base ? `${base}/` : "/";
+
+	const lines = [
+		`# ${displayName}`,
+
+		"",
+		`> ${tagline}. Systems engineering student, Ethereum & cryptography enthusiast, security researcher.`,
+
+		"",
+		`Member of [${org.name}](${org.url}) and co-founder of [${hacktandil.name}](${hacktandil.url}).`,
+
+		"",
+		"## Profile",
+		"",
+		`- [Complete professional profile](${base}/agents.md): Full bio, projects, talks, and background (recommended starting point)`,
+		`- [HTML homepage](${home}): Human-friendly version with same content`,
+
+		"",
+		"## Blog",
+		"",
+		`- [Blog index](${base}/blog/): All technical writing and research`,
+		`- [Individual posts as Markdown](${base}/blog/): Add .md to any blog URL (e.g. /blog/devcon-sea.md)`,
+
+		"",
+		"## Optional",
+		"",
+		`- [RSS Feed](${base}/rss.xml): For keeping up with new posts`,
+
+		"",
+		"---",
+		"",
+		"**For LLMs**: Start with `/agents.md` for the richest context about me, then explore specific blog posts as needed. All content is written to be both human and machine readable.",
+		"",
+	];
+
+	if (base) {
+		lines.push(`Canonical page: [${home}](${home})`);
+	}
+
+	return lines.join("\n");
+}
 
 /** Plain Markdown for humans, crawlers, and tools. Keep in sync via `pnpm sync:agents`. */
 export function renderAgentsMd(siteUrl = ""): string {

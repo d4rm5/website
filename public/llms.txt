@@ -1,9 +1,23 @@
-# d4rm
+# dantesito
 
-> Systems engineering student · Argentina. Ethereum, cryptography, security.
+> Hacker · Argentina. Systems engineering student, Ethereum & cryptography enthusiast, security researcher.
 
-## Details
+Member of [The Red Guild](https://theredguild.org) and co-founder of [HackTandil](https://hacktandil.org).
 
-- [Machine-readable profile (Markdown)](/agents.md)
-- [Blog](/blog/)
-- [RSS](/rss.xml)
+## Profile
+
+- [Complete professional profile](/agents.md): Full bio, projects, talks, and background (recommended starting point)
+- [HTML homepage](/): Human-friendly version with same content
+
+## Blog
+
+- [Blog index](/blog/): All technical writing and research
+- [Individual posts as Markdown](/blog/): Add .md to any blog URL (e.g. /blog/devcon-sea.md)
+
+## Optional
+
+- [RSS Feed](/rss.xml): For keeping up with new posts
+
+---
+
+**For LLMs**: Start with `/agents.md` for the richest context about me, then explore specific blog posts as needed. All content is written to be both human and machine readable.
