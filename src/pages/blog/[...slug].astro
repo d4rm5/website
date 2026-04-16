@@ -36,6 +36,18 @@ const agentMarkdownHref = `/blog/${encodeURIComponent(mdFile)}`;
     <p class='mt-2 text-neutral-500 not-prose dark:text-gray-500'>
       {post.data.pubDate.toISOString().slice(0, 10)}
     </p>
+    {post.data.image ? (
+      <figure class='not-prose mt-8'>
+        <img
+          src={post.data.image}
+          alt={post.data.title}
+          class='w-full rounded-lg border border-neutral-200 object-cover dark:border-neutral-700'
+          loading='eager'
+          decoding='async'
+          fetchpriority='high'
+        />
+      </figure>
+    ) : null}
     <div class='mt-8'>
       <Content />
     </div>

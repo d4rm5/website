@@ -20,6 +20,5 @@ pnpm-debug.log*
 # macOS-specific files
 .DS_Store
 
-# Generated from src (see integrations/public-mirrors.ts)
+# Generated (see integrations/public-mirrors.ts)
 public/agents.md
-public/blog/*.md

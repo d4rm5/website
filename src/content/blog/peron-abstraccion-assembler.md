@@ -3,6 +3,7 @@ title: "Perón, Abstracción y Assembler"
 description: "Hace unos días, mi amigo Agustín me dijo: “Tengo una take que te va a sonar rara. Tiene que ver con Perón, Assembler y la abstracción”. Pero al contrario de lo que él creía, no me sonó nada raro y en…"
 pubDate: 2023-12-07
 legacyId: "qeF6TzHwcr3J0Ze6VTJF"
+image: "/images/peron-abstraccion-assembler.avif"
 ---
 
 Hace unos días, mi amigo Agustín me dijo: “Tengo una take que te va a sonar rara. Tiene que ver con Perón, Assembler y la abstracción”. Pero al contrario de lo que él creía, no me sonó nada raro y entendí al instante la idea que me quiso transmitir. Quizá porque hace semanas venía rosqueando sobre la idea de la abstracción aplicada en la computación y con ella analizando sus pros y sus contras.
