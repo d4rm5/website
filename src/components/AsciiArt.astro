@@ -1,0 +1,40 @@
+---
+export interface Props {
+  text: string;
+}
+---
+<div class="ascii-art-wrapper" aria-label="ASCII art">
+  <pre class="ascii-art" data-text={Astro.props.text}></pre>
+</div>
+<style>
+.ascii-art-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+.ascii-art {
+  font-family: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+  font-size: clamp(6px, 2.4vw, 12px);
+  line-height: 1.05;
+  color: #34d399;
+  background: #0b1020;
+  padding: 12px;
+  border-radius: 6px;
+  white-space: pre;
+}
+</style>
+<script>
+  (function(){
+    const el = document.querySelector('[data-text]');
+    if (!el) return;
+    const text = el.getAttribute('data-text') || '';
+    // Simple typing effect for a friendly reveal; can be skipped if needed
+    let i = 0;
+    const step = () => {
+      if (i < text.length) {
+        el.textContent += text.charAt(i++);
+        requestAnimationFrame(step);
+      }
+    };
+    step();
+  })();
+</script>
