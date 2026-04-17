@@ -4,17 +4,38 @@ import { getCollection } from "astro:content";
 
 export async function getStaticPaths() {
     const posts = await getCollection("blog");
-    return posts.map((post) => ({
-        params: { slug: post.slug },
+    const slugFromPost = (p: any) => p.slug ?? (p.id ?? '').toString().split('/').pop()?.replace(/\.[^/.]+$/, '');
+    const valid = posts.filter((p: any) => !!slugFromPost(p));
+    return valid.map((post: any) => ({
+        params: { slug: slugFromPost(post) },
         props: { post },
     }));
 }
 
 const { post } = Astro.props;
-const { Content } = await post.render();
+let Content: any = null;
+let hasRender = false;
+let htmlFromMarkdown: string | null = null;
+try {
+  const rendered = await post.render();
+  Content = rendered?.Content ?? null;
+  hasRender = typeof Content === 'function';
+} catch {
+  hasRender = false;
+  if (typeof post?.body === 'string' && post.body.length > 0) {
+    try {
+      const marked = await import('marked');
+      htmlFromMarkdown = String((marked.default ?? marked).parse(post.body));
+    } catch {
+      htmlFromMarkdown = null;
+    }
+}
+}
 
-const mdFile = post.id.includes("/") ? post.id.replace(/^.*\//, "") : post.id;
-const agentMarkdownHref = `/blog/${encodeURIComponent(mdFile)}`;
+// Build a stable Markdown link ending with .md regardless of source file extension
+const slugFromPost = (p: any) => p.slug ?? (p.id ?? '').toString().split('/').pop()?.replace(/\.[^/.]+$/, '');
+const slugForMarkdown = slugFromPost(post);
+const agentMarkdownHref = `/blog/${encodeURIComponent(slugForMarkdown)}.md`;
 ---
 
 <Base
@@ -57,7 +78,7 @@ const agentMarkdownHref = `/blog/${encodeURIComponent(mdFile)}`;
             ) : null
         }
         <div class="mt-8">
-            <Content />
+            {Content ? <Content /> : (htmlFromMarkdown ? <div set:html={htmlFromMarkdown}></div> : null)}
         </div>
     </article>
 </Base>

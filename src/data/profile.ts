@@ -95,7 +95,7 @@ export const events: readonly ProfileEvent[] = [
 		date: "2025-11-19",
 		location: "Buenos Aires, Argentina",
 		roles: ["campaign"],
-		detail: "On-site security awareness · The Red Guild",
+		detail: "On-site security awareness campaing · The Red Guild",
 		url: "https://blog.theredguild.org/against-all-odds-security-awareness-campaign-at-devconnect/",
 	},
 	{

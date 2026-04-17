@@ -12,11 +12,11 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/check": "^0.5.3",
+    "@astrojs/check": "^0.9.8",
     "@astrojs/rss": "^4.0.18",
-    "@astrojs/tailwind": "^5.1.0",
+    "@astrojs/tailwind": "^6.0.2",
     "@fontsource-variable/inconsolata": "^5.1.0",
-    "astro": "^4.3.6",
+    "astro": "^6.1.7",
     "marked": "^18.0.0",
     "prettier-plugin-tailwindcss": "^0.5.11",
     "tailwindcss": "^3.4.1",
