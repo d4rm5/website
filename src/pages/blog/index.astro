@@ -9,7 +9,7 @@ const posts = (await getCollection("blog")).sort(
 
 <Base
     title="Dante's Delirium"
-    ogTitle="Blog"
+    ogTitle="Dante's Delirium"
     description="dantesito's Blog — notes and posts."
 >
     <nav class="mb-10 text-center text-sm text-neutral-500 dark:text-gray-500">
@@ -30,20 +30,26 @@ const posts = (await getCollection("blog")).sort(
     <ul class="mx-auto max-w-lg space-y-4">
         {
             posts.map((post) => {
-              const slug = post.slug ?? ((post.id ?? '').toString().split('/').pop()?.replace(/\.[^/.]+$/, ''));
-              return (
-                <li>
-                  <a
-                    href={`/blog/${slug}/`}
-                    class="text-blue-600 hover:underline dark:text-blue-400"
-                  >
-                    {post.data.title}
-                  </a>
-                  <span class="text-neutral-500 dark:text-gray-500">
-                    — {post.data.pubDate.toISOString().slice(0, 10)}
-                  </span>
-                </li>
-              );
+                const slug =
+                    post.slug ??
+                    (post.id ?? "")
+                        .toString()
+                        .split("/")
+                        .pop()
+                        ?.replace(/\.[^/.]+$/, "");
+                return (
+                    <li>
+                        <a
+                            href={`/blog/${slug}/`}
+                            class="text-blue-600 hover:underline dark:text-blue-400"
+                        >
+                            {post.data.title}
+                        </a>
+                        <span class="text-neutral-500 dark:text-gray-500">
+                            — {post.data.pubDate.toISOString().slice(0, 10)}
+                        </span>
+                    </li>
+                );
             })
         }
     </ul>
