@@ -41,7 +41,9 @@ function absoluteImageUrl(image: string): string {
   return new URL(path, site).href;
 }
 
-const ogImageUrl = absoluteImageUrl(ogImageProp ?? '/avatar.png');
+// Use a site-wide OG image fallback for pages that don't specify one
+// '/og.png' exists in the public/ folder and is suitable as a default Open Graph image.
+const ogImageUrl = absoluteImageUrl(ogImageProp ?? '/og.png');
 const twitterCard = ogType === 'article' ? 'summary_large_image' : 'summary';
 
 ---
