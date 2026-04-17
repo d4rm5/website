@@ -10,6 +10,12 @@ export interface Props {
 .ascii-art-wrapper {
   width: 100%;
   overflow-x: auto;
+  /* Hide scrollbar on desktop while keeping scroll functionality */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+.ascii-art-wrapper::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
 .ascii-art {
   font-family: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
