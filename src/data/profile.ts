@@ -195,7 +195,7 @@ export function renderLlmsTxt(siteUrl = ""): string {
 		`# ${displayName}`,
 
 		"",
-		`> ${tagline}. Systems engineering student, Ethereum & cryptography enthusiast, security researcher.`,
+		`> ${tagline}. Ethereum enthusiast, security researcher.`,
 
 		"",
 		`Member of [${org.name}](${org.url}) and co-founder of [${hacktandil.name}](${hacktandil.url}).`,
