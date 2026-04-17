@@ -1,29 +1,47 @@
 ---
-import Base from '../../layouts/Base.astro';
-import { getCollection } from 'astro:content';
+import Base from "../../layouts/Base.astro";
+import { getCollection } from "astro:content";
 
-const posts = (await getCollection('blog')).sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+const posts = (await getCollection("blog")).sort(
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 ---
 
-<Base title='Blog · dantesito.eth' ogTitle='Blog' description='Blog — notes and posts.'>
-  <nav class='mb-10 text-center text-sm text-neutral-500 dark:text-gray-500'>
-    <a href='/' class='hover:text-neutral-800 dark:hover:text-gray-300'>Home</a>
-    <span class='mx-2'>·</span>
-    <a href='/rss.xml' class='hover:text-neutral-800 dark:hover:text-gray-300'>RSS</a>
-  </nav>
-  <h1 class='mb-8 text-center text-2xl font-semibold text-neutral-900 dark:text-gray-100'>Blog</h1>
-  <ul class='mx-auto max-w-lg space-y-4'>
-    {posts.map((post) => (
-      <li>
-        <a href={`/blog/${post.slug}/`} class='text-blue-600 hover:underline dark:text-blue-400'>
-          {post.data.title}
-        </a>
-        <span class='text-neutral-500 dark:text-gray-500'>
-          — {post.data.pubDate.toISOString().slice(0, 10)}
-        </span>
-      </li>
-    ))}
-  </ul>
+<Base
+    title="Dante's Delirium"
+    ogTitle="Blog"
+    description="dantesito's Blog — notes and posts."
+>
+    <nav class="mb-10 text-center text-sm text-neutral-500 dark:text-gray-500">
+        <a href="/" class="hover:text-neutral-800 dark:hover:text-gray-300"
+            >Home</a
+        >
+        <span class="mx-2">·</span>
+        <a
+            href="/rss.xml"
+            class="hover:text-neutral-800 dark:hover:text-gray-300">RSS</a
+        >
+    </nav>
+    <h1
+        class="mb-8 text-center text-2xl font-semibold text-neutral-900 dark:text-gray-100"
+    >
+        Dante's Delirium
+    </h1>
+    <ul class="mx-auto max-w-lg space-y-4">
+        {
+            posts.map((post) => (
+                <li>
+                    <a
+                        href={`/blog/${post.slug}/`}
+                        class="text-blue-600 hover:underline dark:text-blue-400"
+                    >
+                        {post.data.title}
+                    </a>
+                    <span class="text-neutral-500 dark:text-gray-500">
+                        — {post.data.pubDate.toISOString().slice(0, 10)}
+                    </span>
+                </li>
+            ))
+        }
+    </ul>
 </Base>

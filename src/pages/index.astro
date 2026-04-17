@@ -26,7 +26,19 @@ import {
     <h1 class='mb-3 text-center text-4xl font-bold text-neutral-900 sm:text-3xl dark:text-white'>
       {displayName}
     </h1>
-    <p class='mb-2 text-center text-lg text-neutral-600 sm:text-base dark:text-gray-300'>{tagline}</p>
+    <p class='mb-2 text-center text-lg text-neutral-600 sm:text-base dark:text-gray-300'>
+      <span id='easter-egg-hacker' class='cursor-pointer select-none hover:text-blue-600 dark:hover:text-blue-400 transition-colors'>
+        {tagline}
+      </span>
+    </p>
+    <div id='warning-popup' class='hidden fixed inset-0 z-50 flex items-center justify-center bg-black/80'>
+      <div class='rounded-lg border border-red-500 bg-neutral-900 px-6 py-4 text-center shadow-xl'>
+        <p class='text-red-500 font-mono text-lg'>don't click again</p>
+      </div>
+    </div>
+    <div id='ascii-container' class='hidden font-mono text-green-400 whitespace-pre leading-tight mb-4 overflow-hidden'>
+      <span id='ascii-text' class='text-[2vw] sm:text-xs md:text-sm lg:text-base'></span>
+    </div>
     <p class='mx-auto mb-8 max-w-lg text-center text-base text-neutral-500 sm:text-sm dark:text-gray-400'>
       Member of{' '}
       <a
@@ -118,4 +130,98 @@ import {
       </>
     ) : null}
   </div>
+<script>
+    // @ts-nocheck
+    const asciiArt = `jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjYjju|b|j||*|Y||Yjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjuuuuuuuYY|Yj|ujuYjbjmjQbjYYumjuuuuuujjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuujuuj|;>;;>;>>;>>;;>;;;>;;";;;;;;>>;>;;}jjjuuuuuuuuuuuuuuuuuuuuuuuuuuu
+uuuuuuuuuuuuuuuuuuYuYuj;>;>>>>>>>>;>>>>>>>>>>>>;>>>>>;;>>>>>>;;>>;>;>YuYuuuuuuuuuuuuuuuuuuujY
+uuuuuuuuuuuuuuuuYuYYu-;>;>>>>->>>>>>>>>>>;>>>>>>>>>>>>>>>;;>>>>>>>>>>>>;;;>}YYuuuuuuuuuuuuuuuYY
+uuuuuuuuuuuuuuYuYYYYYj-;>>;>---}->>>>>>>->;>>>>>>>>>>>>>>>>>>>;;;;>>>>>>>>>>>>>>;>|QYuuuuuuuuuuuYYY
+YYYYYYYYYYuuYYYYY|;;;;>>>;-|}}}-;>--}>-}};-->>>-}->;>>>>>->>>>>>>;;>>>>>>>>>->>>>---;jQYYYYYYYYuYYYY
+YYYYYYYYYYYYYYYYQ;>>>>>>->>>>>>-}-}}}}>>}}>-}}}};>}>>>-|>;;;;;;>>;>>;;;;;;;;>}->-}>|}"mYYYYYYYQYYYY
+YYYYYYYYYYYYYYm;;>;>>>>>>>>>>->>>-}}>>>-}}}-}}-;;}}}}}}""""""""";"""""""""""";-}}}>>}->QYYYYYYYYYu&
+YYYYYYYYYYYYYQ;;>>>>>>>>>>>>>>>>--->>;>-->>-}>>;>}}}--;mbbbb**QYYQ******bbbbbb;->->;>>;mYYYYYYYYY$&
+YYYYYYYYYYYYYQ";>>>>>>>;>;;;>>>>>>>>>;>>>>>>>>>;>>}->>"bmQmbbbbbbbbbbbbbbbbbmQb">>>>;>>>|QYYYYYub$&&
+YYYYYYYYYYYuuum">>>;>>>>>;>>>>>>>>>>;>>>>>>>>>>;;>>>>>"jmQmbbbbbbbbbbbbbbbbbbbmm->>>>>;>>;QYYYuY$$&&&
+YYYYYuYuQ*$$$$>;>>;>>>>>>>>>>>>>>;>>>>;;>>>>>;;>>>>>>.ubmbbbbbbbbbbbbbbbbbbbbbbmb">>>>>;>-QYYu$$&&&&&
+Q&&$$$$$$&$mQQ;;>>>>>;>>>>>>;;;;;;;>>>>>>;;;->>>>>;"*bmbbbbbbbbbbbbbbb****bbbbbbQ">>;>>>QYu&$&&&&&$Q
+&&&&&&&$$$$$$*;>>>>>>>>>>>>>>>>>>>>>>;;;uu|>>;;"""">-}mbbbbbbbbbbbbbb*};;|uuuYYu|m-.;"".*$$&&&&&$$uY
+&$$$$**bYuuYuQ";;;;;;;;>;>>>>>>>>;;}|bQ>"."";|u*bb****mbbbbbbbbbbbbbbbb|;-";;;>}&mmb}Q$$$&&&&&$$QuYY
+&*uuuYYYYYYYYYY;>>>>>>>>>>>>>>;>";b}>;>|mbbm};>|QmmYj*bbbbbbbbbbbbbbbbY.;$$}--;;>&bm$$&&&&&&$$muYYYY
+YYYYYYYYYYYYYYY."";;"";;>>>>>;.mbmbbbb**b-;>|-Q>;;;|&bbbbbbbbbbbmmbbQ.>$"->>>>-b"*m$&&&&$$$YuYYYYYY
+YYYYYYmmbbbbbbbbmbbbbbbbbY">>>;Qbbbbbbb&-">-}j}|>---->.Qbbbbbbbbbbmmmb>>}">-|>;|.$bmm$&&$$bYuYYYYYYmb
+YQbbbbbbbbbbbmbbmmmmmmmmmb;;>"*bbbbbb*.Yu;j->----->>-}"*bbbbbbbbmmmmb*.}};;;>b.mbbm*$$buuYYYYYYYQbbb
+bbbbbbbbbb*bbbmbbbmmmmmmbb*}".*bbbbbbb**$;;||->>>>}b>-;*bbbbbbbbbmmmmm&;>>-->.$mmmbuuuYYYYYYYYQ*bbbb
+bbbbbb*&&$>m*b*mmmbbmmmmmmbb&*"*bbbbbbbbm&$.>-}|||>>";&bbbbbbbbbmmmmmmmbbbbbbbmmmbbYYYYYYYYY**bbbbbb
+*&&$$$$Y-}}$YbY$$$Qmmmmbbbbbbb*bbbbbbbbbbbm**$&u">YQ**bbbbbbbbbb**bmmmmmmmmmmmmmbQYYYYYYYb**bbbbbbbb
+*$Y-}|}||||jmY-bu}$$$*&*bmmmbbbbbbbbbbbbbbbbmmbb**bbbbbbbbbbbbbbbbbbbbmmmmmmmmmmYuYYmm*******b*b****
+|}}|}}}}}jjju}}YQYjjQbjjQ&*&mbbbmmmbbbbbbbbbbbbbbbbbbbbbbbbbmbjuuujbbbbmmmmmmmb&&&&&********b&&&$&&&
+uQQQQQmQmmQj}|uj||jj|}|u||Qjum*Y$&$mmmmmmb*bbbbbbbbbbbbbbbbbbbbbbbbbbbmbbbb*&&QjuYYYm$bQ&$&$$&&mjYb*
+jjjjjj|uYYYYQYYQQQj}}|}|uuuujjjujuYQQ*$$$b>Y*b****b*bbbbbmmmbbbbbbbb*b*YujujjjjuuQQQY}QYuujjjjuYYYYY
+}-}|||uu-|uYYYQj|QYYYujjjjjjjjYQYQ|}"""".;>>;;;""-}-mmmmmmmmmmmmj}};"""">***bb*&}Q;|Y;|jQ&bbbbbbbmmm
+YQQQQQQQQQQYQYYYYuuuuuujujQQQYYYuQ>}|;;;-}}->;;;;;;.mQQQQQQQQQm.;;;;>>>>;".ubmQQmb}};uY"b.*bbmmmmmmm
+YuuuuuuuuuuuuuYYYYYYYYYYYuuuYY$$"---}}}>>--|||>;>>$mbmmmQQQQQb.""">>;;>;;;""bmmmbbYbbu&j*mmmmmmmbbm
+m$$$$$$$$$$$$$$&*mQQQmb&$$$$$$$$$$$"-}}}}|||->>||}>bbbbbbbbbbb**b*.;>>>>>}>-*bmmmQQQmmmmmmmmQQQQYYQ
+&$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$mQQ.-------;}>->-}--}->>|bmmmmmmmmmm&->}>}->|;>;jQQQYuuuYYYYYYYYYYYuY
+bmQYuuuuuuuuYYQmbmmbmmmbmQYYYYQ|};>;-}}---}}}}}-}---;;-}>j|uuuQmbmj>}--}-;}-;;;;;;;j$$$*bbmQYYQmbb$&
+YYYYYYYYYYYYYYYYYYYYYYYYYQu-;;;;}}}-->>------->-}--j;>>>|->-->>>----->--}-};>>>>>>;.>$*&$$$$$$$$$*b
+uuuuuuuuuuuuuuuuuuuuuuuuuu|----}}}}}-->}}------}}}}}-|>--->--||ju|-j}Y}>--->;;>>>>>->;-YYYYYYYYYYYYY`;
+
+    let clickCount = 0;
+    const hackerEl = document.getElementById('easter-egg-hacker');
+    const asciiContainer = document.getElementById('ascii-container');
+    const asciiText = document.getElementById('ascii-text');
+    const warningPopup = document.getElementById('warning-popup');
+    let isTyping = false;
+
+    function typeWriter(text, element, callback) {
+      let i = 0;
+      const speed = 3;
+
+      function type() {
+        if (i < text.length) {
+          element.textContent += text.charAt(i);
+          i++;
+          setTimeout(type, speed + Math.random() * 5);
+        } else if (callback) {
+          callback();
+        }
+      }
+      type();
+    }
+
+    function startTypewriter() {
+      if (!asciiContainer || !asciiText || isTyping) return;
+      isTyping = true;
+      asciiText.textContent = '';
+      asciiContainer.classList.remove('hidden');
+      typeWriter(asciiArt, asciiText, () => {
+        isTyping = false;
+        // ASCII stays visible until page reload
+      });
+    }
+
+    function showWarning() {
+      if (warningPopup) {
+        warningPopup.classList.remove('hidden');
+        setTimeout(() => {
+          warningPopup.classList.add('hidden');
+        }, 800);
+      }
+    }
+
+    if (hackerEl && asciiContainer && asciiText) {
+      hackerEl.addEventListener('click', () => {
+        clickCount++;
+        if (clickCount < 3) {
+          showWarning();
+        } else if (!isTyping) {
+          startTypewriter();
+          clickCount = 0;
+        }
+      });
+    }
+  </script>
 </Base>

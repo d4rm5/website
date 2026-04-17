@@ -1,6 +1,6 @@
 export const displayName = "dantesito";
 
-export const tagline = "Hacker · Argentina";
+export const tagline = "Hacker · 🇦🇷";
 
 /**
  * Dual AI-friendly approach:
