@@ -14,9 +14,8 @@ import {
   socials,
   tagline,
 } from '../data/profile';
-// Removed ASCII art feature from homepage
-// import AsciiArt from '../components/AsciiArt.astro';
-// import { asciiArt } from '../data/asciiArt';
+import AsciiArt from '../components/AsciiArt.astro';
+import { asciiArt } from '../data/asciiArt';
 ---
 
 <Base
@@ -39,7 +38,9 @@ import {
         <p class='text-red-500 font-mono text-lg'>don't click again</p>
       </div>
     </div>
-<!-- ASCII art removed -->
+<div id='ascii-container' class='hidden font-mono text-green-400 whitespace-pre leading-tight mb-4 overflow-auto'>
+<span id='ascii-text' class='text-[clamp(6px,2.4vw,12px)]'></span>
+    </div>
     <p class='mx-auto mb-8 max-w-lg text-center text-base text-neutral-500 sm:text-sm dark:text-gray-400'>
       Member of{' '}
       <a
@@ -131,8 +132,8 @@ import {
       </>
     ) : null}
   </div>
-  <!-- ASCII art removed -->
-<!--<script>
+  <AsciiArt text={asciiArt} />
+<script>
     // @ts-nocheck
     const asciiArt = `jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjYjju|b|j||*|Y||Yjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
@@ -225,5 +226,5 @@ uuuuuuuuuuuuuuuuuuuuuuuuuu|----}}}}}-->}}------}}}}}-|>--->--||ju|-j}Y}>--->;;>>
         }
       });
     }
-  </script>-->
+  </script>
 </Base>
