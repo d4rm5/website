@@ -1,2 +1,3 @@
 User-agent: *
 Disallow:
+Sitemap: https://dantesito.com/sitemap.xml

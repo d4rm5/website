@@ -1,0 +1,15 @@
+# Netlify _headers configuration
+# https://docs.netlify.com/routing/headers/
+
+# Link headers for agent discovery (RFC 8288)
+# Homepage
+/index.html
+  Link: </sitemap.xml>; rel="sitemap"
+  Link: </agents.md>; rel="alternate"
+  Link: </llms.txt>; rel="alternate"
+
+# Also apply to root
+/
+  Link: </sitemap.xml>; rel="sitemap"
+  Link: </agents.md>; rel="alternate"
+  Link: </llms.txt>; rel="alternate"
