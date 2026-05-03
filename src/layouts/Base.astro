@@ -75,7 +75,7 @@ const twitterCard = ogType === 'article' ? 'summary_large_image' : 'summary';
     {agentMarkdownHref !== '/agents.md' && (
       <link rel='alternate' type='text/markdown' title='This post as Markdown' href={agentMarkdownHref} />
     )}
-    <link rel='alternate' type='application/rss+xml' title='Blog' href='/rss.xml' />
+    <link rel='alternate' type='application/rss+xml' title='Blog and weeknotes' href='/rss.xml' />
     <meta name='description' content={description} />
     <meta name='author' content='d4rm' />
 
@@ -103,6 +103,29 @@ const twitterCard = ogType === 'article' ? 'summary_large_image' : 'summary';
       main {
         font-family: 'Inconsolata Variable', monospace;
         font-display: swap;
+      }
+
+      .x-post-embed {
+        margin: 2rem auto;
+        max-width: 550px;
+      }
+
+      .x-post-embed-fallback {
+        margin: 0;
+        border: 1px solid rgb(212 212 212);
+        border-radius: 0.75rem;
+        padding: 1rem;
+        color: rgb(82 82 82);
+        font-style: normal;
+      }
+
+      .dark .x-post-embed-fallback {
+        border-color: rgb(64 64 64);
+        color: rgb(212 212 212);
+      }
+
+      .x-post-embed-fallback p {
+        margin: 0;
       }
     </style>
   </head>
@@ -199,6 +222,72 @@ const twitterCard = ogType === 'article' ? 'summary_large_image' : 'summary';
           document.documentElement.classList.contains('dark') ? 'dark' : 'light',
         );
       });
+    </script>
+    <script is:inline>
+      (function () {
+        var embeds = document.querySelectorAll('[data-x-post-id]');
+        if (embeds.length === 0) return;
+
+        var theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+        var scriptSrc = 'https://platform.x.com/widgets.js';
+
+        function renderEmbeds(twttr) {
+          if (!twttr || !twttr.widgets || !twttr.widgets.createTweet) return;
+
+          embeds.forEach(function (embed) {
+            if (embed.getAttribute('data-x-post-rendered') === 'true') return;
+
+            var postId = embed.getAttribute('data-x-post-id');
+            if (!postId) return;
+
+            var mount = embed.querySelector('.x-post-embed-mount');
+            if (!mount) {
+              mount = document.createElement('div');
+              mount.className = 'x-post-embed-mount';
+              embed.appendChild(mount);
+            }
+
+            twttr.widgets
+              .createTweet(postId, mount, {
+                align: 'center',
+                dnt: true,
+                theme: theme,
+              })
+              .then(function (created) {
+                if (!created) return;
+                embed.setAttribute('data-x-post-rendered', 'true');
+                var fallback = embed.querySelector('.x-post-embed-fallback');
+                if (fallback) fallback.setAttribute('hidden', '');
+              })
+              .catch(function () {
+                mount.remove();
+              });
+          });
+        }
+
+        function onWidgetsReady() {
+          if (window.twttr && window.twttr.ready) {
+            window.twttr.ready(renderEmbeds);
+            return;
+          }
+
+          renderEmbeds(window.twttr);
+        }
+
+        var existingScript = document.querySelector('script[src="' + scriptSrc + '"]');
+        if (existingScript) {
+          existingScript.addEventListener('load', onWidgetsReady, { once: true });
+          onWidgetsReady();
+          return;
+        }
+
+        var script = document.createElement('script');
+        script.async = true;
+        script.src = scriptSrc;
+        script.charset = 'utf-8';
+        script.addEventListener('load', onWidgetsReady, { once: true });
+        document.body.appendChild(script);
+      })();
     </script>
   </body>
 </html>

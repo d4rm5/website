@@ -3,29 +3,29 @@ import Base from "../../layouts/Base.astro";
 import { getCollection, render } from "astro:content";
 
 export async function getStaticPaths() {
-    const posts = (await getCollection("blog")).filter((post) => !post.data.draft);
-    const slugFromPost = (p: any) => p.slug ?? (p.id ?? '').toString().split('/').pop()?.replace(/\.[^/.]+$/, '');
-    const valid = posts.filter((p: any) => !!slugFromPost(p));
-    return valid.map((post: any) => ({
-        params: { slug: slugFromPost(post) },
-        props: { post },
+    const weeknotes = (await getCollection("weeknotes")).filter((weeknote) => !weeknote.data.draft);
+    const slugFromWeeknote = (p: any) => p.slug ?? (p.id ?? '').toString().split('/').pop()?.replace(/\.[^/.]+$/, '');
+    const valid = weeknotes.filter((p: any) => !!slugFromWeeknote(p));
+    return valid.map((weeknote: any) => ({
+        params: { slug: slugFromWeeknote(weeknote) },
+        props: { weeknote },
     }));
 }
 
-const { post } = Astro.props;
+const { weeknote } = Astro.props;
 let Content: any = null;
 let hasRender = false;
 let htmlFromMarkdown: string | null = null;
 try {
-  const rendered = await render(post);
+  const rendered = await render(weeknote);
   Content = rendered?.Content ?? null;
   hasRender = typeof Content === 'function';
 } catch {
   hasRender = false;
-  if (typeof post?.body === 'string' && post.body.length > 0) {
+  if (typeof weeknote?.body === 'string' && weeknote.body.length > 0) {
     try {
       const marked = await import('marked');
-      htmlFromMarkdown = String((marked.default ?? marked).parse(post.body));
+      htmlFromMarkdown = String((marked.default ?? marked).parse(weeknote.body));
     } catch {
       htmlFromMarkdown = null;
     }
@@ -33,19 +33,19 @@ try {
 }
 
 // Build a stable Markdown link ending with .md regardless of source file extension
-const slugFromPost = (p: any) => p.slug ?? (p.id ?? '').toString().split('/').pop()?.replace(/\.[^/.]+$/, '');
-const slugForMarkdown = slugFromPost(post);
-const agentMarkdownHref = `/blog/${encodeURIComponent(slugForMarkdown)}.md`;
+const slugFromWeeknote = (p: any) => p.slug ?? (p.id ?? '').toString().split('/').pop()?.replace(/\.[^/.]+$/, '');
+const slugForMarkdown = slugFromWeeknote(weeknote);
+const agentMarkdownHref = `/weeknotes/${encodeURIComponent(slugForMarkdown)}.md`;
 ---
 
 <Base
-    title={`${post.data.title} · dantesito`}
-    description={post.data.description}
-    ogTitle={post.data.title}
+    title={`${weeknote.data.title} · weeknotes · dantesito`}
+    description={weeknote.data.description}
+    ogTitle={weeknote.data.title}
     agentMarkdownHref={agentMarkdownHref}
     ogType="article"
-    publishedTime={post.data.pubDate}
-    ogImage={post.data.image}
+    publishedTime={weeknote.data.pubDate}
+    ogImage={weeknote.data.image}
 >
     <nav class="mb-8 text-center text-sm text-neutral-500 dark:text-gray-500">
         <a href="/" class="hover:text-neutral-800 dark:hover:text-gray-300"
@@ -65,16 +65,16 @@ const agentMarkdownHref = `/blog/${encodeURIComponent(slugForMarkdown)}.md`;
     <article
         class="prose prose-sm prose-neutral mx-auto max-w-none dark:prose-invert"
     >
-        <h1 class="mb-0 text-2xl font-semibold">{post.data.title}</h1>
+        <h1 class="mb-0 text-2xl font-semibold">{weeknote.data.title}</h1>
         <p class="mt-2 text-neutral-500 not-prose dark:text-gray-500">
-            {post.data.pubDate.toISOString().slice(0, 10)}
+            {weeknote.data.pubDate.toISOString().slice(0, 10)}
         </p>
         {
-            post.data.image ? (
+            weeknote.data.image ? (
                 <figure class="not-prose mt-8">
                     <img
-                        src={post.data.image}
-                        alt={post.data.title}
+                        src={weeknote.data.image}
+                        alt={weeknote.data.title}
                         class="w-full rounded-lg border border-neutral-200 object-cover dark:border-neutral-700"
                         loading="eager"
                         decoding="async"

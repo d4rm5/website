@@ -3,13 +3,34 @@ import type { APIRoute } from "astro";
 import { getCollection } from "astro:content";
 import { marked } from "marked";
 import { siteDescription } from "../data/profile";
+import { normalizeXPostUrl } from "../utils/x-posts";
+
+const rssRenderer = new marked.Renderer();
+const defaultImageRenderer = rssRenderer.image.bind(rssRenderer);
+
+rssRenderer.image = (token: any) => {
+  const postUrl = normalizeXPostUrl(String(token.href ?? ""));
+  if (!postUrl) return defaultImageRenderer(token);
+
+  const label = String(token.text ?? "").trim() || "View post on X";
+  return `<a href="${escapeHtml(postUrl)}">${escapeHtml(label)}</a>`;
+};
 
 // Simple, robust RSS generator with strong de-duplication guarantees.
 export const GET: APIRoute = async (context) => {
-  // Load all blog posts and sort by publication date (newest first).
-  const postsAll = (await getCollection("blog")).sort((a, b) => {
-    const aDate = a.data.pubDate instanceof Date ? a.data.pubDate : new Date(a.data.pubDate as any);
-    const bDate = b.data.pubDate instanceof Date ? b.data.pubDate : new Date(b.data.pubDate as any);
+  // Load blog posts and weeknotes into one chronological feed.
+  const blogPosts = (await getCollection("blog")).map((entry) => ({
+    collection: "blog" as const,
+    entry,
+  })).filter(({ entry }) => !entry.data.draft);
+  const weeknotes = (await getCollection("weeknotes")).map((entry) => ({
+    collection: "weeknotes" as const,
+    entry,
+  })).filter(({ entry }) => !entry.data.draft);
+
+  const entriesAll = [...blogPosts, ...weeknotes].sort((a, b) => {
+    const aDate = dateFromEntry(a.entry);
+    const bDate = dateFromEntry(b.entry);
     return bDate.valueOf() - aDate.valueOf();
   });
 
@@ -23,31 +44,37 @@ export const GET: APIRoute = async (context) => {
     return s || "untitled";
   };
 
-  // Build a deduplicated list of posts by legacyId first, then by slug-derived key
+  const slugFromEntry = (entry: any) => {
+    const rawSlug = entry.slug ?? entry.id ?? "";
+    const slug = rawSlug.toString().split("/").pop()?.replace(/\.[^/.]+$/, "");
+    return slug || slugFromTitle(entry.data?.title);
+  };
+
+  // Build a deduplicated list by collection and stable post/weeknote identity.
   const seenKeys = new Set<string>();
-  const deduped = postsAll.filter((p) => {
-    const key = p.legacyId ?? slugFromTitle(p.data?.title);
+  const deduped = entriesAll.filter(({ collection, entry }) => {
+    const key = `${collection}:${entry.data?.legacyId ?? slugFromEntry(entry)}`;
     if (seenKeys.has(key)) return false;
     seenKeys.add(key);
     return true;
   });
 
   // Build items
-  const items = deduped.map((post, idx) => {
-    const body = ("body" in post) ? (post.body as string) : "";
-    const content = body ? marked.parse(body) : "";
-    // Safe slug for URL
-    const rawSlug = post.slug ?? slugFromTitle(post.data?.title);
+  const items = deduped.map(({ collection, entry }, idx) => {
+    const body = ("body" in entry) ? (entry.body as string) : "";
+    const content = body ? marked.parse(body, { renderer: rssRenderer }) : "";
+    const basePath = collection === "weeknotes" ? "/weeknotes" : "/blog";
+    const rawSlug = slugFromEntry(entry);
     const slug = rawSlug && rawSlug !== "undefined" && rawSlug !== "untitled" ? rawSlug : `post-${idx}`;
     const link = siteBase
-      ? new URL(`/blog/${slug}/`, siteBase).toString()
-      : `/blog/${slug}/`;
-    const pubDate = post.data.pubDate instanceof Date ? post.data.pubDate : new Date(post.data.pubDate as any);
+      ? new URL(`${basePath}/${slug}/`, siteBase).toString()
+      : `${basePath}/${slug}/`;
+    const pubDate = dateFromEntry(entry);
     return {
       link,
-      title: post.data.title,
+      title: entry.data.title,
       pubDate,
-      description: post.data.description,
+      description: entry.data.description,
       content,
       guid: `${link}-${pubDate.toISOString()}`,
     };
@@ -60,3 +87,15 @@ export const GET: APIRoute = async (context) => {
     items,
   });
 };
+
+function dateFromEntry(entry: any): Date {
+  return entry.data.pubDate instanceof Date ? entry.data.pubDate : new Date(entry.data.pubDate as any);
+}
+
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}

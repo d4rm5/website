@@ -2,9 +2,9 @@
 import Base from "../../layouts/Base.astro";
 import { getCollection } from "astro:content";
 
-const posts = (await getCollection("blog")).sort(
-    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
+const posts = (await getCollection("blog"))
+    .filter((post) => !post.data.draft)
+    .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
 <Base
@@ -15,6 +15,12 @@ const posts = (await getCollection("blog")).sort(
     <nav class="mb-10 text-center text-sm text-neutral-500 dark:text-gray-500">
         <a href="/" class="hover:text-neutral-800 dark:hover:text-gray-300"
             >Home</a
+        >
+        <span class="mx-2">·</span>
+        <a
+            href="/weeknotes/"
+            class="hover:text-neutral-800 dark:hover:text-gray-300"
+            >Weeknotes</a
         >
         <span class="mx-2">·</span>
         <a

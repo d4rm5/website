@@ -1,0 +1,66 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getCollection } from "astro:content";
+
+const weeknotes = (await getCollection("weeknotes"))
+    .filter((weeknote) => !weeknote.data.draft)
+    .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<Base
+    title="Weeknotes · dantesito"
+    ogTitle="Weeknotes · dantesito"
+    description="Weekly notes and updates."
+>
+    <nav class="mb-10 text-center text-sm text-neutral-500 dark:text-gray-500">
+        <a href="/" class="hover:text-neutral-800 dark:hover:text-gray-300"
+            >Home</a
+        >
+        <span class="mx-2">·</span>
+        <a href="/blog/" class="hover:text-neutral-800 dark:hover:text-gray-300"
+            >Blog</a
+        >
+        <span class="mx-2">·</span>
+        <a
+            href="/rss.xml"
+            class="hover:text-neutral-800 dark:hover:text-gray-300">RSS</a
+        >
+    </nav>
+    <h1
+        class="mb-8 text-center text-2xl font-semibold text-neutral-900 dark:text-gray-100"
+    >
+        Weeknotes
+    </h1>
+    {
+        weeknotes.length > 0 ? (
+            <ul class="mx-auto max-w-lg space-y-4">
+                {weeknotes.map((weeknote) => {
+                    const slug =
+                        weeknote.slug ??
+                        (weeknote.id ?? "")
+                            .toString()
+                            .split("/")
+                            .pop()
+                            ?.replace(/\.[^/.]+$/, "");
+                    return (
+                        <li>
+                            <a
+                                href={`/weeknotes/${slug}/`}
+                                class="text-blue-600 hover:underline dark:text-blue-400"
+                            >
+                                {weeknote.data.title}
+                            </a>
+                            <span class="text-neutral-500 dark:text-gray-500">
+                                — {weeknote.data.pubDate.toISOString().slice(0, 10)}
+                            </span>
+                        </li>
+                    );
+                })}
+            </ul>
+        ) : (
+            <p class="text-center text-neutral-500 dark:text-gray-500">
+                No weeknotes published yet.
+            </p>
+        )
+    }
+</Base>

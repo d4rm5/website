@@ -8,7 +8,8 @@ export const GET: APIRoute = async (context) => {
     return new Response("Site URL not configured", { status: 500 });
   }
 
-  const posts = await getCollection("blog");
+  const posts = (await getCollection("blog")).filter((post) => !post.data.draft);
+  const weeknotes = (await getCollection("weeknotes")).filter((weeknote) => !weeknote.data.draft);
   
   const sortedPosts = posts.sort((a, b) => {
     const aDate = a.data.pubDate instanceof Date 
@@ -23,6 +24,7 @@ export const GET: APIRoute = async (context) => {
   const urls: Array<{ loc: string; lastmod?: string; changefreq: string; priority: number }> = [
     { loc: siteBase, changefreq: "weekly", priority: 1.0 },
     { loc: new URL("/blog/", siteBase).toString(), changefreq: "weekly", priority: 0.8 },
+    { loc: new URL("/weeknotes/", siteBase).toString(), changefreq: "weekly", priority: 0.7 },
   ];
 
   for (const post of sortedPosts) {
@@ -30,7 +32,7 @@ export const GET: APIRoute = async (context) => {
       ? post.data.pubDate 
       : new Date(post.data.pubDate as unknown as string);
     
-    const rawSlug = post.slug ?? slugFromTitle(post.data?.title);
+    const rawSlug = slugFromEntry(post);
     const slug = rawSlug && rawSlug !== "undefined" ? rawSlug : slugFromTitle(post.data?.title);
     
     urls.push({
@@ -38,6 +40,32 @@ export const GET: APIRoute = async (context) => {
       lastmod: pubDate.toISOString().split("T")[0],
       changefreq: "monthly",
       priority: 0.6,
+    });
+  }
+
+  const sortedWeeknotes = weeknotes.sort((a, b) => {
+    const aDate = a.data.pubDate instanceof Date
+      ? a.data.pubDate
+      : new Date(a.data.pubDate as unknown as string);
+    const bDate = b.data.pubDate instanceof Date
+      ? b.data.pubDate
+      : new Date(b.data.pubDate as unknown as string);
+    return bDate.valueOf() - aDate.valueOf();
+  });
+
+  for (const weeknote of sortedWeeknotes) {
+    const pubDate = weeknote.data.pubDate instanceof Date
+      ? weeknote.data.pubDate
+      : new Date(weeknote.data.pubDate as unknown as string);
+
+    const rawSlug = slugFromEntry(weeknote);
+    const slug = rawSlug && rawSlug !== "undefined" ? rawSlug : slugFromTitle(weeknote.data?.title);
+
+    urls.push({
+      loc: new URL(`/weeknotes/${slug}/`, siteBase).toString(),
+      lastmod: pubDate.toISOString().split("T")[0],
+      changefreq: "weekly",
+      priority: 0.5,
     });
   }
 
@@ -74,4 +102,10 @@ function slugFromTitle(title?: string): string {
   const t = title.normalize("NFKD").replace(/[\u0300-\u036f]/g, "");
   const s = t.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
   return s || "untitled";
+}
+
+function slugFromEntry(entry: any): string {
+  const rawSlug = entry.slug ?? entry.id ?? "";
+  const slug = rawSlug.toString().split("/").pop()?.replace(/\.[^/.]+$/, "");
+  return slug || slugFromTitle(entry.data?.title);
 }

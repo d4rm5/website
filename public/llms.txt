@@ -13,10 +13,11 @@ Member of [The Red Guild](https://theredguild.org) and co-founder of [HackTandil
 
 - [Blog index](/blog/): All technical writing and research
 - [Individual posts as Markdown](/blog/): Add .md to any blog URL (e.g. /blog/devcon-sea.md)
+- [Weeknotes](/weeknotes/): Weekly notes, also included in the RSS feed
 
 ## Optional
 
-- [RSS Feed](/rss.xml): For keeping up with new posts
+- [RSS Feed](/rss.xml): For keeping up with new posts and weeknotes
 
 ---
 

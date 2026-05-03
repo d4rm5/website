@@ -40,6 +40,7 @@ export const hacktandil = {
 
 export const socials = [
 	{ name: "My blog", url: "/blog/" },
+	{ name: "Weeknotes", url: "/weeknotes/" },
 	{ name: "Email", url: "mailto:hello@dantesito.com" },
 	{ name: "X", url: "https://x.com/d4rm_" },
 	{ name: "GitHub", url: "https://github.com/d4rm5" },
@@ -211,11 +212,12 @@ export function renderLlmsTxt(siteUrl = ""): string {
 		"",
 		`- [Blog index](${base}/blog/): All technical writing and research`,
 		`- [Individual posts as Markdown](${base}/blog/): Add .md to any blog URL (e.g. /blog/devcon-sea.md)`,
+		`- [Weeknotes](${base}/weeknotes/): Weekly notes, also included in the RSS feed`,
 
 		"",
 		"## Optional",
 		"",
-		`- [RSS Feed](${base}/rss.xml): For keeping up with new posts`,
+		`- [RSS Feed](${base}/rss.xml): For keeping up with new posts and weeknotes`,
 
 		"",
 		"---",
