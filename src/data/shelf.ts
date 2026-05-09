@@ -1,6 +1,7 @@
 export type ShelfKind =
 	| "book"
 	| "movie"
+	| "series"
 	| "album"
 	| "podcast"
 	| "article"
@@ -21,6 +22,7 @@ export type ShelfItem = {
 export const shelfKindLabels: Record<ShelfKind, string> = {
 	book: "Books",
 	movie: "Movies",
+	series: "Series",
 	album: "Albums",
 	podcast: "Podcasts",
 	article: "Articles",
@@ -32,6 +34,7 @@ export const shelfKindLabels: Record<ShelfKind, string> = {
 export const shelfKindOrder: readonly ShelfKind[] = [
 	"book",
 	"movie",
+	"series",
 	"album",
 	"podcast",
 	"article",
@@ -71,6 +74,78 @@ export const shelfItems: readonly ShelfItem[] = [
 		creator: "Kenneth O. Stanley and Joel Lehman",
 		url: "https://www.goodreads.com/book/show/25670869-why-greatness-cannot-be-planned",
 		note: "A sharp argument against overfitting life and research to fixed objectives.",
+		added: "2026-05-09",
+	},
+	{
+		title: "Akira",
+		kind: "movie",
+		creator: "Katsuhiro Otomo",
+		url: "https://letterboxd.com/film/akira/",
+		note: "A landmark cyberpunk anime with explosive worldbuilding and visual force.",
+		added: "2026-05-09",
+	},
+	{
+		title: "Marty Supreme",
+		kind: "movie",
+		creator: "Josh Safdie",
+		url: "https://letterboxd.com/film/marty-supreme/",
+		note: "A high-strung story about chasing greatness past the point of good sense.",
+		added: "2026-05-09",
+	},
+	{
+		title: "Memento",
+		kind: "movie",
+		creator: "Christopher Nolan",
+		url: "https://letterboxd.com/film/memento/",
+		note: "A fractured thriller about memory, identity, and self-deception.",
+		added: "2026-05-09",
+	},
+	{
+		title: "One Battle After Another",
+		kind: "movie",
+		creator: "Paul Thomas Anderson",
+		url: "https://letterboxd.com/film/one-battle-after-another/",
+		note: "A paranoid, kinetic reunion of ex-revolutionaries and unfinished history.",
+		added: "2026-05-09",
+	},
+	{
+		title: "Punch-Drunk Love",
+		kind: "movie",
+		creator: "Paul Thomas Anderson",
+		url: "https://letterboxd.com/film/punch-drunk-love/",
+		note: "An anxious, luminous romance about loneliness finding an exit.",
+		added: "2026-05-09",
+	},
+	{
+		title: "The Truman Show",
+		kind: "movie",
+		creator: "Peter Weir",
+		url: "https://letterboxd.com/film/the-truman-show/",
+		note: "A clean, unsettling fable about surveillance, performance, and escape.",
+		added: "2026-05-09",
+	},
+	{
+		title: "Better Call Saul",
+		kind: "series",
+		creator: "Vince Gilligan and Peter Gould",
+		url: "https://www.imdb.com/title/tt3032476/",
+		note: "A patient legal tragedy about compromise, identity, and consequence.",
+		added: "2026-05-09",
+	},
+	{
+		title: "Breaking Bad",
+		kind: "series",
+		creator: "Vince Gilligan",
+		url: "https://www.imdb.com/title/tt0903747/",
+		note: "A ruthless transformation story with unusually precise escalation.",
+		added: "2026-05-09",
+	},
+	{
+		title: "Mr. Robot",
+		kind: "series",
+		creator: "Sam Esmail",
+		url: "https://www.imdb.com/title/tt4158110/",
+		note: "A cyberpsychological thriller about systems, control, and fractured identity.",
 		added: "2026-05-09",
 	},
 	{
@@ -115,6 +190,14 @@ export const shelfItems: readonly ShelfItem[] = [
 		creator: "Hasu",
 		url: "https://substack.com/@hasu/p-154778560",
 		note: "A useful essay on improving the way you acquire and compound knowledge.",
+		added: "2026-05-09",
+	},
+	{
+		title: "Lifehacks",
+		kind: "article",
+		creator: "Alexey Guzey",
+		url: "https://guzey.com/lifehacks/",
+		note: "A practical collection of small habits, tools, and tactics for living better.",
 		added: "2026-05-09",
 	},
 	{
