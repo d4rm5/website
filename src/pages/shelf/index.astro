@@ -1,0 +1,94 @@
+---
+import Base from "../../layouts/Base.astro";
+import { groupShelfItemsByKind } from "../../data/shelf";
+
+const groups = groupShelfItemsByKind();
+---
+
+<Base
+    title="Shelf · dantesito"
+    ogTitle="Shelf · dantesito"
+    description="Books, movies, albums, podcasts, articles, and other things that gave something to my life."
+    agentMarkdownHref="/shelf.md"
+>
+    <nav class="mb-10 text-center text-sm text-neutral-500 dark:text-gray-500">
+        <a href="/" class="hover:text-neutral-800 dark:hover:text-gray-300"
+            >Home</a
+        >
+        <span class="mx-2">·</span>
+        <a href="/blog/" class="hover:text-neutral-800 dark:hover:text-gray-300"
+            >Blog</a
+        >
+        <span class="mx-2">·</span>
+        <a
+            href="/weeknotes/"
+            class="hover:text-neutral-800 dark:hover:text-gray-300"
+            >Weeknotes</a
+        >
+        <span class="mx-2">·</span>
+        <a
+            href="/rss.xml"
+            class="hover:text-neutral-800 dark:hover:text-gray-300">RSS</a
+        >
+    </nav>
+    <h1
+        class="mb-3 text-center text-2xl font-semibold text-neutral-900 dark:text-gray-100"
+    >
+        Shelf
+    </h1>
+    <p class="mx-auto mb-10 max-w-lg text-center text-sm text-neutral-500 dark:text-gray-500">
+        Books, movies, albums, podcasts, articles, and other things that gave something to my life.
+    </p>
+    {
+        groups.length > 0 ? (
+            <div class="mx-auto max-w-2xl space-y-8">
+                {groups.map((group) => (
+                    <section aria-labelledby={`shelf-${group.kind}`}>
+                        <h2
+                            id={`shelf-${group.kind}`}
+                            class="mb-3 text-sm font-semibold uppercase tracking-normal text-neutral-500 dark:text-gray-500"
+                        >
+                            {group.label}
+                        </h2>
+                        <ul class="space-y-3">
+                            {group.items.map((item) => (
+                                <li class="text-sm leading-relaxed sm:text-base">
+                                    <span class="font-medium text-neutral-900 dark:text-gray-100">
+                                        {item.url ? (
+                                            <a
+                                                href={item.url}
+                                                class="text-blue-600 hover:underline dark:text-blue-400"
+                                                target={item.url.startsWith("http") ? "_blank" : undefined}
+                                                rel={item.url.startsWith("http") ? "noopener noreferrer" : undefined}
+                                            >
+                                                {item.title}
+                                            </a>
+                                        ) : (
+                                            item.title
+                                        )}
+                                    </span>
+                                    {item.creator ? (
+                                        <span class="text-neutral-600 dark:text-gray-400">
+                                            {" "}
+                                            — {item.creator}
+                                        </span>
+                                    ) : null}
+                                    {item.note ? (
+                                        <span class="text-neutral-600 dark:text-gray-400">
+                                            {" "}
+                                            — {item.note}
+                                        </span>
+                                    ) : null}
+                                </li>
+                            ))}
+                        </ul>
+                    </section>
+                ))}
+            </div>
+        ) : (
+            <p class="text-center text-neutral-500 dark:text-gray-500">
+                Nothing published yet.
+            </p>
+        )
+    }
+</Base>

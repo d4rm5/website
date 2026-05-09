@@ -15,6 +15,11 @@ Member of [The Red Guild](https://theredguild.org) and co-founder of [HackTandil
 - [Individual posts as Markdown](/blog/): Add .md to any blog URL (e.g. /blog/devcon-sea.md)
 - [Weeknotes](/weeknotes/): Weekly notes, also included in the RSS feed
 
+## Shelf
+
+- [Shelf](/shelf/): Books, movies, albums, podcasts, articles, and other things that gave something to my life
+- [Shelf as Markdown](/shelf.md): Dense machine-readable version
+
 ## Optional
 
 - [RSS Feed](/rss.xml): For keeping up with new posts and weeknotes

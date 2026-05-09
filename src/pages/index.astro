@@ -9,6 +9,7 @@ import {
   hacktandil,
   org,
   projects,
+  sections,
   siteDescription,
   siteTitle,
   socials,
@@ -25,6 +26,13 @@ import { asciiArt } from '../data/asciiArt';
   includeAgentsAlternate
 >
   <div class='flex min-h-[calc(100vh-4rem)] flex-col justify-center py-8'>
+    <nav class='mb-10 flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm font-medium text-blue-600 dark:text-blue-400' aria-label='Site sections'>
+      {sections.map((section) => (
+        <a href={section.url} class='hover:underline'>
+          {section.name}
+        </a>
+      ))}
+    </nav>
     <h1 class='mb-3 text-center text-4xl font-bold text-neutral-900 sm:text-3xl dark:text-white'>
       {displayName}
     </h1>

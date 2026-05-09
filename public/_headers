@@ -7,9 +7,11 @@
   Link: </sitemap.xml>; rel="sitemap"
   Link: </agents.md>; rel="alternate"
   Link: </llms.txt>; rel="alternate"
+  Link: </shelf.md>; rel="alternate"
 
 # Also apply to root
 /
   Link: </sitemap.xml>; rel="sitemap"
   Link: </agents.md>; rel="alternate"
   Link: </llms.txt>; rel="alternate"
+  Link: </shelf.md>; rel="alternate"

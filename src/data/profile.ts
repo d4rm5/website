@@ -38,9 +38,13 @@ export const hacktandil = {
 	url: "https://hacktandil.org",
 } as const;
 
-export const socials = [
+export const sections = [
 	{ name: "My blog", url: "/blog/" },
 	{ name: "Weeknotes", url: "/weeknotes/" },
+	{ name: "Shelf", url: "/shelf/" },
+] as const;
+
+export const socials = [
 	{ name: "Email", url: "mailto:hello@dantesito.com" },
 	{ name: "X", url: "https://x.com/d4rm_" },
 	{ name: "GitHub", url: "https://github.com/d4rm5" },
@@ -49,7 +53,12 @@ export const socials = [
 ] as const;
 
 /** Conference / community events where you've spoken, curated, volunteered, or ran on-site awareness (most recent first in the UI). */
-export type EventRole = "speaker" | "volunteer" | "curator" | "campaign";
+export type EventRole =
+	| "speaker"
+	| "organizer"
+	| "volunteer"
+	| "curator"
+	| "campaign";
 
 export type ProfileEvent = {
 	name: string;
@@ -68,6 +77,8 @@ export function formatEventRoleLabel(role: EventRole): string {
 	switch (role) {
 		case "speaker":
 			return "Speaker";
+		case "organizer":
+			return "Organizer";
 		case "volunteer":
 			return "Volunteer";
 		case "curator":
@@ -81,6 +92,8 @@ function roleNameForAgentsMd(role: EventRole): string {
 	switch (role) {
 		case "speaker":
 			return "speaker";
+		case "organizer":
+			return "organizer";
 		case "volunteer":
 			return "volunteer";
 		case "curator":
@@ -100,6 +113,14 @@ export const events: readonly ProfileEvent[] = [
 		url: "https://blog.theredguild.org/against-all-odds-security-awareness-campaign-at-devconnect/",
 	},
 	{
+		name: "Cursor Meetup Tandil",
+		date: "2025-12-17",
+		location: "Tandil, Argentina",
+		roles: ["organizer", "speaker"],
+		detail: "“x402 Protocol: agentes con billetera”",
+		url: "https://luma.com/bip8q6m7",
+	},
+	{
 		name: "Ekoparty",
 		date: "2025-10-23",
 		location: "Buenos Aires, Argentina",
@@ -110,7 +131,7 @@ export const events: readonly ProfileEvent[] = [
 	{
 		name: "Ethereum Essentials · Nodo Serrano",
 		date: "2025-10-15",
-		location: "Buenos Aires, Argentina",
+		location: "Tandil, Argentina",
 		roles: ["speaker"],
 		detail: "“¿Qué es Ethereum?”",
 		url: "https://devconnect.org/destino/ethereum-essentials-volume-1-006Vj00000M6G8gIAF",
@@ -126,7 +147,7 @@ export const events: readonly ProfileEvent[] = [
 	{
 		name: "GEERS Blockchain",
 		date: "2024-09-15",
-		location: "Argentina",
+		location: "Tandil, Argentina",
 		roles: ["speaker", "curator"],
 		detail: "Speaker & content curation",
 		url: "http://geers.in/blockchain",
@@ -215,6 +236,12 @@ export function renderLlmsTxt(siteUrl = ""): string {
 		`- [Weeknotes](${base}/weeknotes/): Weekly notes, also included in the RSS feed`,
 
 		"",
+		"## Shelf",
+		"",
+		`- [Shelf](${base}/shelf/): Books, movies, albums, podcasts, articles, and other things that gave something to my life`,
+		`- [Shelf as Markdown](${base}/shelf.md): Dense machine-readable version`,
+
+		"",
 		"## Optional",
 		"",
 		`- [RSS Feed](${base}/rss.xml): For keeping up with new posts and weeknotes`,
@@ -247,6 +274,13 @@ export function renderAgentsMd(siteUrl = ""): string {
 		`> ${tagline}`,
 		"",
 		`Member of [${org.name}](${org.url}) and co-founder of [${hacktandil.name}](${hacktandil.url}).`,
+		"",
+		"## Sections",
+		"",
+		...sections.map((s) => {
+			const href = base && s.url.startsWith("/") ? `${base}${s.url}` : s.url;
+			return `- [${s.name}](${href})`;
+		}),
 		"",
 		"## Links",
 		"",
