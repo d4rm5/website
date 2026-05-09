@@ -110,6 +110,14 @@ export const shelfItems: readonly ShelfItem[] = [
 		added: "2026-05-09",
 	},
 	{
+		title: "On Learning How to Learn",
+		kind: "article",
+		creator: "Hasu",
+		url: "https://substack.com/@hasu/p-154778560",
+		note: "A useful essay on improving the way you acquire and compound knowledge.",
+		added: "2026-05-09",
+	},
+	{
 		title: "Círculo Vicioso",
 		kind: "podcast",
 		url: "https://pod.link/1510688047",
