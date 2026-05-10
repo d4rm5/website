@@ -4,16 +4,25 @@ import { getCollection } from "astro:content";
 import { marked } from "marked";
 import { siteDescription } from "../data/profile";
 import { normalizeXPostUrl } from "../utils/x-posts";
+import { normalizeYouTubeUrl } from "../utils/youtube";
 
 const rssRenderer = new marked.Renderer();
 const defaultImageRenderer = rssRenderer.image.bind(rssRenderer);
 
 rssRenderer.image = (token: any) => {
   const postUrl = normalizeXPostUrl(String(token.href ?? ""));
-  if (!postUrl) return defaultImageRenderer(token);
+  if (postUrl) {
+    const label = String(token.text ?? "").trim() || "View post on X";
+    return `<a href="${escapeHtml(postUrl)}">${escapeHtml(label)}</a>`;
+  }
 
-  const label = String(token.text ?? "").trim() || "View post on X";
-  return `<a href="${escapeHtml(postUrl)}">${escapeHtml(label)}</a>`;
+  const videoUrl = normalizeYouTubeUrl(String(token.href ?? ""));
+  if (videoUrl) {
+    const label = String(token.text ?? "").trim() || "Watch on YouTube";
+    return `<a href="${escapeHtml(videoUrl)}">${escapeHtml(label)}</a>`;
+  }
+
+  return defaultImageRenderer(token);
 };
 
 // Simple, robust RSS generator with strong de-duplication guarantees.
