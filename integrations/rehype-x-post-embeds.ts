@@ -65,7 +65,7 @@ function createXPostEmbed(image: any): any {
         type: "element",
         tagName: "blockquote",
         properties: {
-          className: ["twitter-tweet", "x-post-embed-fallback"],
+          className: ["x-post-embed-fallback"],
           dataDnt: "true",
         },
         children: [

@@ -235,10 +235,13 @@ const twitterCard = ogType === 'article' ? 'summary_large_image' : 'summary';
           if (!twttr || !twttr.widgets || !twttr.widgets.createTweet) return;
 
           embeds.forEach(function (embed) {
-            if (embed.getAttribute('data-x-post-rendered') === 'true') return;
+            var renderState = embed.getAttribute('data-x-post-render-state');
+            if (renderState === 'rendering' || renderState === 'rendered') return;
 
             var postId = embed.getAttribute('data-x-post-id');
             if (!postId) return;
+
+            embed.setAttribute('data-x-post-render-state', 'rendering');
 
             var mount = embed.querySelector('.x-post-embed-mount');
             if (!mount) {
@@ -246,6 +249,7 @@ const twitterCard = ogType === 'article' ? 'summary_large_image' : 'summary';
               mount.className = 'x-post-embed-mount';
               embed.appendChild(mount);
             }
+            mount.replaceChildren();
 
             twttr.widgets
               .createTweet(postId, mount, {
@@ -254,12 +258,16 @@ const twitterCard = ogType === 'article' ? 'summary_large_image' : 'summary';
                 theme: theme,
               })
               .then(function (created) {
-                if (!created) return;
-                embed.setAttribute('data-x-post-rendered', 'true');
+                if (!created) {
+                  embed.setAttribute('data-x-post-render-state', 'failed');
+                  return;
+                }
+                embed.setAttribute('data-x-post-render-state', 'rendered');
                 var fallback = embed.querySelector('.x-post-embed-fallback');
                 if (fallback) fallback.setAttribute('hidden', '');
               })
               .catch(function () {
+                embed.setAttribute('data-x-post-render-state', 'failed');
                 mount.remove();
               });
           });
