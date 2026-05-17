@@ -2,7 +2,9 @@ import tailwind from "@astrojs/tailwind";
 import { defineConfig } from "astro/config";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { bookmarkMetadataCacheIntegration } from "./integrations/bookmark-metadata-cache";
 import { publicMirrorsPlugin } from "./integrations/public-mirrors";
+import { rehypeBookmarkCards } from "./integrations/rehype-bookmark-cards";
 import { rehypeXPostEmbeds } from "./integrations/rehype-x-post-embeds";
 import { rehypeYouTubeEmbeds } from "./integrations/rehype-youtube-embeds";
 
@@ -11,9 +13,9 @@ const root = join(__dirname);
 
 export default defineConfig({
   site: process.env.SITE_URL || "https://dantesito.com",
-  integrations: [tailwind()],
+  integrations: [bookmarkMetadataCacheIntegration(root), tailwind()],
   markdown: {
-    rehypePlugins: [rehypeXPostEmbeds, rehypeYouTubeEmbeds],
+    rehypePlugins: [rehypeBookmarkCards, rehypeXPostEmbeds, rehypeYouTubeEmbeds],
   },
   vite: {
     plugins: [publicMirrorsPlugin(root)],

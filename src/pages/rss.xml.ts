@@ -3,6 +3,7 @@ import type { APIRoute } from "astro";
 import { getCollection } from "astro:content";
 import { marked } from "marked";
 import { siteDescription } from "../data/profile";
+import { renderBookmarkShortcodesForRss } from "../utils/bookmarks";
 import { normalizeXPostUrl } from "../utils/x-posts";
 import { normalizeYouTubeUrl } from "../utils/youtube";
 
@@ -69,9 +70,10 @@ export const GET: APIRoute = async (context) => {
   });
 
   // Build items
-  const items = deduped.map(({ collection, entry }, idx) => {
+  const items = await Promise.all(deduped.map(async ({ collection, entry }, idx) => {
     const body = ("body" in entry) ? (entry.body as string) : "";
-    const content = body ? marked.parse(body, { renderer: rssRenderer }) : "";
+    const markdown = body ? await renderBookmarkShortcodesForRss(body) : "";
+    const content = markdown ? await marked.parse(markdown, { renderer: rssRenderer }) : "";
     const basePath = collection === "weeknotes" ? "/weeknotes" : "/blog";
     const rawSlug = slugFromEntry(entry);
     const slug = rawSlug && rawSlug !== "undefined" && rawSlug !== "untitled" ? rawSlug : `post-${idx}`;
@@ -87,7 +89,7 @@ export const GET: APIRoute = async (context) => {
       content,
       guid: `${link}-${pubDate.toISOString()}`,
     };
-  });
+  }));
 
   return rss({
     title: "Dante's Delirium",
