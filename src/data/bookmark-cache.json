@@ -1,4 +1,23 @@
 {
+  "https://pod.link/aHR0cHM6Ly9hbmNob3IuZm0vcy8xMTM2ODg5YjgvcG9kY2FzdC9yc3M": {
+    "url": "https://pod.link/aHR0cHM6Ly9hbmNob3IuZm0vcy8xMTM2ODg5YjgvcG9kY2FzdC9yc3M",
+    "title": "pod.link",
+    "displayUrl": "pod.link/aHR0cHM6Ly9hbmNob3IuZm0vcy8xMTM2ODg5YjgvcG9kY2FzdC9yc3M",
+    "fetchedAt": "2026-06-07T22:02:04.628Z",
+    "status": "fallback",
+    "error": "HTTP 429"
+  },
+  "https://www.elonmuskbook.org/free-book-of-elon-musk": {
+    "url": "https://www.elonmuskbook.org/free-book-of-elon-musk",
+    "title": "Free PDF EPUB of The Book of Elon Musk by Eric Jorgenson &mdash; The Book of Elon Musk",
+    "displayUrl": "elonmuskbook.org/free-book-of-elon-musk",
+    "fetchedAt": "2026-06-07T22:02:05.370Z",
+    "description": "Free pdf, epub, ebook, and audiobook for The Book of Elon Musk by Eric Jorgenson. I believe knowledge should be accessible, regardless of price. If you read the free version, please support the book by writing a review and subscribing to my email newsletter and podcast.",
+    "image": "http://static1.squarespace.com/static/645147d4fecf8e0b8e918049/t/69b17787cdfdbd593d81e1b1/1770409737863/book_of_elon-post-square-coming_soon.jpg?format=1500w",
+    "siteName": "The Book of Elon Musk",
+    "favicon": "https://images.squarespace-cdn.com/content/v1/645147d4fecf8e0b8e918049/117c9b27-d8b2-4a0d-b476-8a7f612fc5a6/favicon.ico?format=100w",
+    "status": "ok"
+  },
   "https://www.henrikkarlsson.xyz/p/hacker-mindset": {
     "url": "https://www.henrikkarlsson.xyz/p/hacker-mindset",
     "title": "How to walk through walls",

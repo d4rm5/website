@@ -48,9 +48,17 @@ export const shelfItems: readonly ShelfItem[] = [
 		title: "The Almanack of Naval Ravikant",
 		kind: "book",
 		creator: "Eric Jorgenson",
-		url: "https://www.goodreads.com/book/show/55148500-the-almanack-of-naval-ravikant",
+		url: "https://www.navalmanack.com/",
 		note: "A compact collection of ideas on leverage, judgment, wealth, and happiness.",
 		added: "2026-05-09",
+	},
+	{
+		title: "The Book of Elon",
+		kind: "book",
+		creator: "Eric Jorgenson",
+		url: "https://www.elonmuskbook.org/",
+		note: "A compact collection of Elon Musk on work, companies and porpuse.",
+		added: "2026-06-07",
 	},
 	{
 		title: "The MANIAC",
