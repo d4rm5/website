@@ -128,6 +128,41 @@ const twitterCard = ogType === 'article' ? 'summary_large_image' : 'summary';
         margin: 0;
       }
 
+      .weeknote-figure {
+        margin: 2rem 0;
+      }
+
+      .weeknote-figure img {
+        display: block;
+        width: 100%;
+        height: auto;
+        border-radius: 0.5rem;
+        border: 1px solid rgb(212 212 212);
+      }
+
+      .dark .weeknote-figure img {
+        border-color: rgb(64 64 64);
+      }
+
+      .weeknote-figcaption {
+        margin-top: 0.5rem;
+        font-size: 0.8125rem;
+        font-style: italic;
+        line-height: 1.4;
+        text-align: center;
+        color: rgb(115 115 115);
+      }
+
+      .dark .weeknote-figcaption {
+        color: rgb(156 163 175);
+      }
+
+      .weeknote-figcaption a {
+        color: inherit;
+        text-decoration: underline;
+        text-underline-offset: 2px;
+      }
+
       .youtube-embed {
         aspect-ratio: 16 / 9;
         margin: 2rem 0;
