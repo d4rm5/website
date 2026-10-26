@@ -50,7 +50,7 @@ const jsonLd = homeJsonLd(site);
     <span id='ascii-text' class='text-[clamp(6px,2.4vw,12px)]'></span>
     </div>
     <p class='mx-auto mb-8 max-w-lg text-center text-base text-neutral-500 sm:text-sm dark:text-gray-400'>
-      Member of{' '}
+      Full stack and product engineer at{' '}
       <a
         href={org.url}
         target='_blank'
@@ -110,7 +110,7 @@ const jsonLd = homeJsonLd(site);
                 ? { target: '_blank' as const, rel: 'noopener noreferrer' as const }
                 : {};
             const roleLine = event.roles.map((r) => formatEventRoleLabel(r)).join(' · ');
-            const where = [formatProfileEventDate(event.date), event.location].filter(Boolean).join(' · ');
+            const where = [formatProfileEventDate(event.date, event.endDate), event.location].filter(Boolean).join(' · ');
             return (
               <li id={`event-${event.name.replace(/\s+/g, '-')}`} class='text-sm sm:text-base'>
                 <div>

@@ -22,3 +22,4 @@ pnpm-debug.log*
 
 # Generated (see integrations/public-mirrors.ts)
 public/agents.md
+.vercel

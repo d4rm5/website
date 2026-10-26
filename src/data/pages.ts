@@ -18,7 +18,7 @@ function normalizeBase(siteUrl: string): string {
 export const aboutTitle = `About · ${displayName}`;
 
 export const aboutDescription =
-	"Who dantesito is: security researcher at The Red Guild, co-founder of HackTandil, and what this site collects.";
+	"Who dantesito is: full stack and product engineer at The Red Guild, co-founder of HackTandil, and what this site collects.";
 
 export const contactTitle = `Contact · ${displayName}`;
 
@@ -33,15 +33,15 @@ export function renderAboutMarkdown(siteUrl = ""): string {
 	const lines = [
 		`# About ${displayName}`,
 		"",
-		"I'm Dante — `dantesito` most places online. I'm a hacker and security",
-		"researcher based in Argentina, and most of my work sits at the point where",
+		"I'm Dante — `dantesito` most places online. I'm a hacker and",
+		"full stack and product engineer based in Argentina. Most of my work sits where",
 		"Ethereum meets the people actually using it: phishing, scams, wallet",
 		"drainers, lookalike domains, and the everyday threats that hit users long",
 		"before they hit smart contracts.",
 		"",
 		"## Where I work",
 		"",
-		`I'm a member of [${org.name}](${org.url}), a web3 security team focused on`,
+		`I'm a full stack and product engineer at [${org.name}](${org.url}), a web3 security team focused on`,
 		"protecting users rather than only auditing code. Alongside that I co-founded",
 		`[${hacktandil.name}](${hacktandil.url}), a hacker community in Tandil,`,
 		"Argentina, where we run meetups and get more people locally into security and",

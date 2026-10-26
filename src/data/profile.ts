@@ -21,7 +21,7 @@ export const siteTitle = "dantesito.com";
 
 /** Short line for `<meta name="description">`, Open Graph, and RSS `<description>`. */
 export const siteDescription =
-	"Member of The Red Guild, co-founder of HackTandil.";
+	"Full stack and product engineer at The Red Guild and co-founder of HackTandil.";
 
 export const twitterSite = "@d4rm_";
 
@@ -58,6 +58,8 @@ export const socials = [
 export type EventRole =
 	| "speaker"
 	| "organizer"
+	| "co-organizer"
+	| "lead"
 	| "volunteer"
 	| "curator"
 	| "campaign";
@@ -66,6 +68,7 @@ export type ProfileEvent = {
 	name: string;
 	/** ISO date (YYYY-MM-DD); used for sorting and display */
 	date: string;
+	endDate?: string;
 	location?: string;
 	roles: readonly EventRole[];
 	/** Short context: series, org, or talk title */
@@ -81,6 +84,10 @@ export function formatEventRoleLabel(role: EventRole): string {
 			return "Speaker";
 		case "organizer":
 			return "Organizer";
+		case "co-organizer":
+			return "Co-Organizer";
+		case "lead":
+			return "Lead";
 		case "volunteer":
 			return "Volunteer";
 		case "curator":
@@ -96,6 +103,10 @@ function roleNameForAgentsMd(role: EventRole): string {
 			return "speaker";
 		case "organizer":
 			return "organizer";
+		case "co-organizer":
+			return "co-organizer";
+		case "lead":
+			return "lead";
 		case "volunteer":
 			return "volunteer";
 		case "curator":
@@ -106,6 +117,29 @@ function roleNameForAgentsMd(role: EventRole): string {
 }
 
 export const events: readonly ProfileEvent[] = [
+	{
+		name: "Tandil Tech Week",
+		date: "2026-10-14",
+		endDate: "2026-10-16",
+		location: "Tandil, Argentina",
+		roles: ["co-organizer"],
+		url: "https://tandiltechweek.com",
+	},
+	{
+		name: "Blockchain Security Village @ Ekoparty BA 2026",
+		date: "2026-10-07",
+		endDate: "2026-10-09",
+		location: "Buenos Aires, Argentina",
+		roles: ["lead"],
+		url: "https://blog.theredguild.org/back-at-ekoparty-three-days-of-blockchain-security-and-community/",
+	},
+	{
+		name: "Cafe Cursor Tandil",
+		date: "2026-07-11",
+		location: "Tandil, Argentina",
+		roles: ["co-organizer"],
+		url: "https://luma.com/jnihlrhh",
+	},
 	{
 		name: "Devconnect Buenos Aires — A.L.E.R.T.",
 		date: "2025-11-19",
@@ -163,13 +197,16 @@ export function getProfileEventsChronological(): ProfileEvent[] {
 	);
 }
 
-export function formatProfileEventDate(iso: string): string {
-	const d = new Date(`${iso}T12:00:00`);
-	return d.toLocaleDateString("en", {
+export function formatProfileEventDate(iso: string, endIso?: string): string {
+	const start = new Date(`${iso}T12:00:00`);
+	const formatter = new Intl.DateTimeFormat("en", {
 		year: "numeric",
 		month: "short",
 		day: "numeric",
 	});
+	return endIso
+		? formatter.formatRange(start, new Date(`${endIso}T12:00:00`))
+		: formatter.format(start);
 }
 
 export const projects = [
@@ -254,10 +291,10 @@ export function renderLlmsTxt(siteUrl = ""): string {
 		`# ${displayName}`,
 
 		"",
-		`> ${tagline}. Ethereum enthusiast, security researcher.`,
+		`> ${tagline}. Ethereum enthusiast.`,
 
 		"",
-		`Member of [${org.name}](${org.url}) and co-founder of [${hacktandil.name}](${hacktandil.url}).`,
+		`Full stack and product engineer at [${org.name}](${org.url}) and co-founder of [${hacktandil.name}](${hacktandil.url}).`,
 
 		"",
 		...renderAgentGuidance(base),
@@ -315,7 +352,7 @@ export function renderAgentsMd(siteUrl = ""): string {
 		"",
 		`> ${tagline}`,
 		"",
-		`Member of [${org.name}](${org.url}) and co-founder of [${hacktandil.name}](${hacktandil.url}).`,
+		`Full stack and product engineer at [${org.name}](${org.url}) and co-founder of [${hacktandil.name}](${hacktandil.url}).`,
 		"",
 		...renderAgentGuidance(base),
 		"",
@@ -349,7 +386,7 @@ export function renderAgentsMd(siteUrl = ""): string {
 						if (linkUrl && base && linkUrl.startsWith("/"))
 							linkUrl = `${base}${linkUrl}`;
 						const title = linkUrl ? `[${e.name}](${linkUrl})` : e.name;
-						const meta = [e.detail, e.location, formatProfileEventDate(e.date)]
+						const meta = [e.detail, e.location, formatProfileEventDate(e.date, e.endDate)]
 							.filter(Boolean)
 							.join(" · ");
 						return `- ${title} (${roleLabels})${meta ? ` — ${meta}` : ""}`;

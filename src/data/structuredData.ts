@@ -48,8 +48,8 @@ function personNode(site: string): JsonLdNode {
 		alternateName: "Dante",
 		url: site,
 		image: abs("/avatar.png", site),
-		description: `${tagline}. Ethereum enthusiast, security researcher. ${siteDescription}`,
-		jobTitle: "Security researcher",
+		description: `${tagline}. Ethereum enthusiast. ${siteDescription}`,
+		jobTitle: "Full stack and product engineer",
 		email: email(),
 		knowsAbout: [
 			"Web3 security",
