@@ -126,11 +126,12 @@ export const events: readonly ProfileEvent[] = [
 		url: "https://tandiltechweek.com",
 	},
 	{
-		name: "Blockchain Security Village @ Ekoparty BA 2026",
+		name: "Ekoparty",
 		date: "2026-10-07",
 		endDate: "2026-10-09",
 		location: "Buenos Aires, Argentina",
 		roles: ["lead"],
+		detail: "Blockchain Security Village",
 		url: "https://blog.theredguild.org/back-at-ekoparty-three-days-of-blockchain-security-and-community/",
 	},
 	{

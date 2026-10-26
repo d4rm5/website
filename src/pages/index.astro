@@ -112,7 +112,7 @@ const jsonLd = homeJsonLd(site);
             const roleLine = event.roles.map((r) => formatEventRoleLabel(r)).join(' · ');
             const where = [formatProfileEventDate(event.date, event.endDate), event.location].filter(Boolean).join(' · ');
             return (
-              <li id={`event-${event.name.replace(/\s+/g, '-')}`} class='text-sm sm:text-base'>
+              <li id={`event-${event.name.replace(/\s+/g, '-')}-${event.date}`} class='text-sm sm:text-base'>
                 <div>
                   {event.url ? (
                     <a
